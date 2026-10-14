@@ -17,6 +17,15 @@ Repository secrets (Settings → Secrets and variables → Actions):
 4. `deploy.yml` verifies the versions match, syncs `trunk`, creates `tags/1.2.0`,
    updates `/assets` from `.wordpress-org/`, and attaches the ZIP to a GitHub release.
 
+## Dependencies
+`vendor/` is not committed. Runtime dependencies (mPDF) are declared in `composer.json`
+`require`; `deploy.yml` runs `composer install --no-dev` before syncing, so `vendor/` ships
+to SVN without dev tools. The CI `build` job runs the same build on every PR.
+
+- `config.platform.php` is pinned to 7.2 because mPDF 7.1.5 declares `php <= 7.2`.
+  mPDF 7.x fatals on PHP 8 when generating a PDF; upgrading to mPDF 8 removes that cap.
+- Commit `composer.lock` (`composer update`, then commit it) so release builds are reproducible.
+
 ## Readme / asset-only updates
 Changes to `readme.txt` or `.wordpress-org/` on the default branch are pushed to SVN
 by `assets.yml` without cutting a release (e.g. bumping "Tested up to").

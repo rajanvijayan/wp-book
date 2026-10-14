@@ -3,16 +3,30 @@
     "description": "WP Book WordPress plugin.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
+    "require": {
+        "php": ">=7.1",
+        "mpdf/mpdf": "7.1.5"
+    },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
         "phpcompatibility/phpcompatibility-wp": "^2.1",
         "wp-coding-standards/wpcs": "^3.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "WPBook\\": "src/"
+        }
     },
     "scripts": {
         "lint": "phpcs",
         "lint:fix": "phpcbf"
     },
     "config": {
+        "platform": {
+            "php": "7.2.34"
+        },
+        "optimize-autoloader": true,
+        "sort-packages": true,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
