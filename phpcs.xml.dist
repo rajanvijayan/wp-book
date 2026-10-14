@@ -15,7 +15,7 @@
     <!-- Plugin header / readme.txt "Requires PHP". -->
     <config name="testVersion" value="7.4-"/>
     <!-- readme.txt "Requires at least". -->
-    <config name="minimum_wp_version" value="3.8"/>
+    <config name="minimum_wp_version" value="4.4"/>
 
     <rule ref="WordPress.WP.I18n">
         <properties>

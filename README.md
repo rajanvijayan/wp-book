@@ -43,7 +43,7 @@ Generated books are saved to `wp-content/uploads/wp-book/`.
 
 | | |
 |---|---|
-| WordPress | 3.8 or later |
+| WordPress | 4.4 or later |
 | PHP | 7.4 or later, including 8.x |
 
 ## Installation
@@ -70,10 +70,10 @@ To test it locally, symlink or copy the folder into `wp-content/plugins/` of a W
 
 ```
 wp-book.php           Plugin bootstrap
-src/                  PSR-4 classes (WPBook\ namespace)
-  Main.php            Wires up hooks
-  admin/Controller.php  Settings page, AJAX handlers, PDF generation
-  view/Controller.php   PDF templates
+src/                  Classes in the WPBook\ namespace (Composer classmap)
+  class-main.php      Wires up hooks
+  admin/class-controller.php  Settings page, AJAX handlers, PDF generation
+  view/class-controller.php   PDF templates
   utils/              Loader, activation, deactivation, i18n
 assets/               Admin CSS and JS
 languages/            Translation template (wp-book.pot)

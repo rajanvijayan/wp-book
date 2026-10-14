@@ -11,7 +11,7 @@ jobs:
   phpcs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: shivammathur/setup-php@v2
         with:
@@ -21,15 +21,13 @@ jobs:
 
       - run: composer install --no-progress --prefer-dist
 
-      # Non-blocking until the imported code has a clean baseline; then remove continue-on-error.
       - name: PHPCS (WordPress Coding Standards)
-        continue-on-error: true
         run: composer lint
 
   plugin-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: shivammathur/setup-php@v2
         with:
@@ -40,12 +38,18 @@ jobs:
       # wp-book.php requires vendor/autoload.php; without it activation fatals.
       - run: composer install --no-dev --prefer-dist --no-progress --no-interaction --optimize-autoloader
 
+      # Check exactly what deploy.yml ships to SVN: the checkout minus .distignore.
+      - name: Build release copy
+        run: rsync -a --exclude-from=.distignore ./ "$RUNNER_TEMP/wp-book/"
+
       - name: WordPress Plugin Check
-        if: hashFiles('readme.txt') != ''
         uses: wordpress/plugin-check-action@v1
         with:
-          build-dir: './'
-          exclude-directories: '.github,.wordpress-org,vendor,node_modules'
+          build-dir: ${{ runner.temp }}/wp-book
+          slug: wp-book
+          exclude-directories: 'vendor'
+          # The wp-book slug predates the "wp" naming rule and cannot be changed on WordPress.org.
+          ignore-codes: 'trademarked_term'
 
   build:
     runs-on: ubuntu-latest
@@ -54,7 +58,7 @@ jobs:
       matrix:
         php: ['7.4', '8.1', '8.3', '8.4']
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: shivammathur/setup-php@v2
         with:

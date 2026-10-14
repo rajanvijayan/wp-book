@@ -1,7 +1,7 @@
 === WP Book ===
 Contributors: rajanit2000
 Tags: pdf, ebook, book, export, mpdf
-Requires at least: 3.8
+Requires at least: 4.4
 Tested up to: 7.1
 Requires PHP: 7.4
 Stable tag: 1.0.1
