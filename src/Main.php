@@ -73,7 +73,7 @@ class Main
     {
 
         $this->wp_book = 'wp-book';
-        $this->version = '1.0.0';
+        $this->version = '1.0.1';
         $this->loader = new utils\Loader();
 
         $view = new view\Controller();

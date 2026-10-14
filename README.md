@@ -46,7 +46,7 @@ Generated books are saved to `wp-content/uploads/wp-book/`.
 | WordPress | 3.8 or later |
 | PHP | 7.1 or 7.2 |
 
-Version 1.0 bundles mPDF 7.1, which does not support PDF generation on PHP 8.
+Version 1.0.1 bundles mPDF 7.1, which does not support PDF generation on PHP 8.
 
 ## Installation
 

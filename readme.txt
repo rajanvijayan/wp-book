@@ -4,7 +4,7 @@ Tags: pdf, ebook, book, export, mpdf
 Requires at least: 3.8
 Tested up to: 4.9.8
 Requires PHP: 7.1
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,7 +60,7 @@ Generated books are saved to `wp-content/uploads/wp-book/`, and you can download
 
 = Which PHP versions are supported? =
 
-WP Book 1.0 bundles mPDF 7.1, which supports PHP 7.1 and 7.2. Generating a PDF on PHP 8 is not supported in this release.
+WP Book 1.0.1 bundles mPDF 7.1, which supports PHP 7.1 and 7.2. Generating a PDF on PHP 8 is not supported in this release.
 
 = I only see a blank page after clicking Generate Book. =
 
@@ -97,6 +97,12 @@ In `wp-content/uploads/wp-book/`.
 * [Select2](https://select2.org/): used for the searchable select boxes.
 
 == Changelog ==
+
+= 1.0.1 =
+* Rewrote the plugin description, FAQ and screenshot captions.
+* New plugin banners.
+* Added a Requires PHP header (7.1).
+* Updated bundled libraries: myclabs/deep-copy 1.13.4 and psr/log 1.1.4.
 
 = 1.0 =
 * Initial release.
