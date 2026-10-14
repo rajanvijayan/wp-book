@@ -14,7 +14,7 @@
  * Plugin Name:       WP Book
  * Plugin URI:        https://wpsmartcare.com/wp-book/
  * Description:       PDF Download plugin.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Requires at least: 4.4
  * Requires PHP:      7.4
  * Author:            Rajan V

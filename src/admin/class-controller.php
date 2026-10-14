@@ -22,6 +22,11 @@ class Controller {
 	const SELECT2_VERSION = '4.0.6-rc.1';
 
 	/**
+	 * Capability needed to open the WP Book screen and call its AJAX handlers.
+	 */
+	const CAPABILITY = 'manage_options';
+
+	/**
 	 * The ID of this plugin.
 	 *
 	 * @since  1.0.0
@@ -126,7 +131,7 @@ class Controller {
 		add_options_page(
 			__( 'WP Book', 'wp-book' ),
 			__( 'WP Book', 'wp-book' ),
-			'manage_options',
+			self::CAPABILITY,
 			$this->wp_book,
 			array( $this, 'wp_book_page' )
 		);
@@ -286,19 +291,37 @@ class Controller {
 	public function load_posts_for_print() {
 		check_ajax_referer( $this->wp_book, 'security' );
 
-		$post_type      = isset( $_POST['post_type'] ) ? sanitize_text_field( wp_unslash( $_POST['post_type'] ) ) : 'post';
+		if ( ! current_user_can( self::CAPABILITY ) ) {
+			wp_send_json( array(), 403 );
+		}
+
+		$post_type      = isset( $_POST['post_type'] ) ? sanitize_key( wp_unslash( $_POST['post_type'] ) ) : 'post';
 		$posts_per_page = isset( $_POST['posts_per_page'] ) ? absint( $_POST['posts_per_page'] ) : 10;
-		$order          = isset( $_POST['order'] ) ? sanitize_text_field( wp_unslash( $_POST['order'] ) ) : 'ASC';
-		$order_by       = isset( $_POST['order_by'] ) ? sanitize_text_field( wp_unslash( $_POST['order_by'] ) ) : '';
+		$order          = isset( $_POST['order'] ) ? strtoupper( sanitize_key( wp_unslash( $_POST['order'] ) ) ) : 'ASC';
+		$order_by       = isset( $_POST['order_by'] ) ? sanitize_key( wp_unslash( $_POST['order_by'] ) ) : '';
+
+		// Only the public post types listed in the Post Types dropdown.
+		if ( ! in_array( $post_type, get_post_types( array( 'public' => true ), 'names' ), true ) ) {
+			wp_send_json( array(), 400 );
+		}
 
 		$args  = array(
 			'post_type'      => $post_type,
-			'posts_per_page' => $posts_per_page,
-			'order'          => $order,
-			'orderby'        => $order_by,
+			'posts_per_page' => min( $posts_per_page, 500 ),
+			'order'          => 'DESC' === $order ? 'DESC' : 'ASC',
+			'orderby'        => in_array( $order_by, array( 'ID', 'id', 'author', 'title', 'name', 'type', 'date', 'modified', 'parent', 'rand' ), true ) ? $order_by : 'date',
 		);
-		$query = get_posts( $args );
-		wp_send_json( $query );
+		$posts = array();
+		foreach ( get_posts( $args ) as $post ) {
+			if ( current_user_can( 'read_post', $post->ID ) ) {
+				// The screen only needs these two fields; never send content, passwords or other post data.
+				$posts[] = array(
+					'ID'         => $post->ID,
+					'post_title' => $post->post_title,
+				);
+			}
+		}
+		wp_send_json( $posts );
 	}
 
 	/**
@@ -306,6 +329,17 @@ class Controller {
 	 */
 	public function generate_book() {
 		check_ajax_referer( $this->wp_book, 'security' );
+
+		if ( ! current_user_can( self::CAPABILITY ) ) {
+			wp_send_json(
+				array(
+					'result'       => 'failed',
+					'notice_class' => 'notice-error',
+					'message'      => __( 'You are not allowed to create books.', 'wp-book' ),
+				),
+				403
+			);
+		}
 
 		$output = array();
 		if ( ! isset( $_POST['material'] ) || ! is_array( $_POST['material'] ) ) {
@@ -359,8 +393,8 @@ class Controller {
 			}
 
 			foreach ( $pdf['material'] as $material ) {
-				$post = get_post( $material );
-				if ( ! $post ) {
+				$post = get_post( absint( $material ) );
+				if ( ! $post || ! current_user_can( 'read_post', $post->ID ) ) {
 					continue;
 				}
 				$this->mpdf->WriteHTML( '<h2>' . $post->post_title . '</h2>' );
@@ -371,7 +405,7 @@ class Controller {
 				}
 			}
 
-			$file_name = md5( microtime() ) . '.pdf';
+			$file_name = wp_generate_password( 32, false ) . '.pdf';
 
 			$this->mpdf->Output( $upload_dir . DIRECTORY_SEPARATOR . $file_name, 'F' );
 

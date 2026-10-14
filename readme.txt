@@ -4,7 +4,7 @@ Tags: pdf, ebook, book, export, mpdf
 Requires at least: 4.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,11 @@ In `wp-content/uploads/wp-book/`.
 
 == Changelog ==
 
+= 1.1.1 =
+* Security: Only users who can manage options can list posts or generate books, and books only include posts the user is allowed to read.
+* Security: The post list sent to the browser now contains only post IDs and titles.
+* Security: Generated PDF file names are now random and cannot be guessed.
+
 = 1.1.0 =
 * New: PHP 8 support. WP Book now bundles mPDF 8.3, which works on PHP 7.4 through 8.5.
 * New: Japanese, Arabic and other non-Latin scripts render in the PDF instead of empty boxes.
@@ -118,6 +123,9 @@ In `wp-content/uploads/wp-book/`.
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.1.1 =
+Security release: restricts who can list posts and generate books. Update recommended.
 
 = 1.1.0 =
 Adds PHP 8 support and fixes security issues in the bundled PDF libraries. Requires PHP 7.4 or later.
