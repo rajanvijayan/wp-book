@@ -15,6 +15,7 @@
  * Plugin URI:        https://wpsmartcare.com/wp-book/
  * Description:       PDF Download plugin.
  * Version:           1.0.1
+ * Requires PHP:      7.4
  * Author:            Rajan V
  * Author URI:        https://wpsmartcare.com/
  * License:           GPL-2.0+

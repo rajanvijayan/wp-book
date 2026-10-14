@@ -123,8 +123,7 @@ class Controller
             __('WP Book', 'wp-book'),
             'manage_options',
             $this->wp_book,
-            array( $this, 'wp_book_page' ),
-            $this->wp_book
+            array( $this, 'wp_book_page' )
         );
     }
 
@@ -184,7 +183,7 @@ class Controller
       <div class="form-group">
 				<label><?php _e('Sort', 'wp-book');?></label>
 				<select class="form-control filter-post-order-by wp-book-select2" onchange="load_material();">
-					<option selected="selected"><?php _e('None');?></option>
+					<option selected="selected" value=""><?php _e('None', 'wp-book');?></option>
 					<option value="ID"><?php _e('ID', 'wp-book');?></option>
 					<option value="author"><?php _e('Author', 'wp-book');?></option>
 					<option value="title"><?php _e('Title', 'wp-book');?></option>
@@ -271,16 +270,16 @@ class Controller
     {
         check_ajax_referer($this->wp_book, 'security');
 
-        $post_type = sanitize_text_field($_POST['post_type']);
-        $posts_per_page = sanitize_text_field($_POST['posts_per_page']);
-        $order = sanitize_text_field($_POST['order']);
-        $order_by = sanitize_text_field($_POST['order_by']);
+        $post_type = isset($_POST['post_type']) ? sanitize_text_field(wp_unslash($_POST['post_type'])) : 'post';
+        $posts_per_page = isset($_POST['posts_per_page']) ? absint($_POST['posts_per_page']) : 10;
+        $order = isset($_POST['order']) ? sanitize_text_field(wp_unslash($_POST['order'])) : 'ASC';
+        $order_by = isset($_POST['order_by']) ? sanitize_text_field(wp_unslash($_POST['order_by'])) : '';
 
         $args = array(
         'post_type' => $post_type,
         'posts_per_page' => $posts_per_page,
         'order' => $order,
-        'order_by' => $order_by
+        'orderby' => $order_by
         );
         $query = get_posts($args);
         header('Content-Type: application/json');
@@ -293,12 +292,16 @@ class Controller
     {
         check_ajax_referer($this->wp_book, 'security');
 
-        $$output = array();
+        $output = array();
         $pdf = $this->pdf_sanitize_array($_POST['material']);
 
         $pdf_options = array(
         'format' => $pdf['options']['page_format'],
         'orientation' => $pdf['options']['page_orientations'],
+        'tempDir' => $this->get_wp_book_temp_dir(),
+        // Pick a bundled font that covers each script (CJK, Arabic, etc.) instead of rendering boxes.
+        'autoScriptToLang' => true,
+        'autoLangToFont' => true,
         );
 
         $upload_dir = $this->get_wp_book_upload_dir();
@@ -310,7 +313,7 @@ class Controller
             $template = $pdf['options']['page_template'];
 
             $stylesheet = $this->build_style($template);
-            $this->mpdf->WriteHTML($stylesheet, 1);
+            $this->mpdf->WriteHTML($stylesheet, \Mpdf\HTMLParserMode::HEADER_CSS);
 
             if($pdf['options']['header'] != '' ) {
                 $this->mpdf->SetHTMLHeader($pdf['options']['header']);
@@ -322,6 +325,9 @@ class Controller
 
             foreach( $pdf['material'] as $material ){
                 $post = get_post($material);
+                if (! $post ) {
+                    continue;
+                }
                 $this->mpdf->WriteHTML('<h2>' .$post->post_title .'</h2>');
                 $this->mpdf->WriteHTML('<p>' . $post->post_content . '</p>');
 
@@ -365,6 +371,17 @@ class Controller
             }
             return $dirname;
         }    
+    }
+
+    //Helper
+    public function get_wp_book_temp_dir()
+    {
+        // mPDF writes font and image caches here; the bundled vendor/mpdf/mpdf/tmp is often read-only.
+        $dirname = trailingslashit(get_temp_dir()) . $this->wp_book;
+        if (! file_exists($dirname) ) {
+            wp_mkdir_p($dirname);
+        }
+        return $dirname;
     }
 
     //Helper

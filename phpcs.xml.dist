@@ -12,8 +12,8 @@
 
     <rule ref="WordPress"/>
     <rule ref="PHPCompatibilityWP"/>
-    <!-- No "Requires PHP" header; 7.1 is the floor set by bundled myclabs/deep-copy 1.8.1 (php ^7.1). -->
-    <config name="testVersion" value="7.1-"/>
+    <!-- Plugin header / readme.txt "Requires PHP". -->
+    <config name="testVersion" value="7.4-"/>
     <!-- readme.txt "Requires at least". -->
     <config name="minimum_wp_version" value="3.8"/>
 

@@ -44,9 +44,7 @@ Generated books are saved to `wp-content/uploads/wp-book/`.
 | | |
 |---|---|
 | WordPress | 3.8 or later |
-| PHP | 7.1 or 7.2 |
-
-Version 1.0.1 bundles mPDF 7.1, which does not support PDF generation on PHP 8.
+| PHP | 7.4 or later, including 8.x |
 
 ## Installation
 
@@ -66,7 +64,7 @@ composer lint         # PHPCS: WordPress Coding Standards + PHPCompatibilityWP
 composer lint:fix     # auto-fix what PHPCBF can
 ```
 
-To test it locally, symlink or copy the folder into `wp-content/plugins/` of a WordPress install that runs PHP 7.1 or 7.2.
+To test it locally, symlink or copy the folder into `wp-content/plugins/` of a WordPress install.
 
 ### Project layout
 
