@@ -9,7 +9,6 @@
 
 return array (
   'mpdf' => 'v8.3.1',
-  'source' => 'https://raw.githubusercontent.com/mpdf/mpdf/v8.3.1/ttfonts/',
   'packs' => 
   array (
     'cjk' => 

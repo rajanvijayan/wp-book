@@ -25,7 +25,7 @@ final class Font_Packs {
 	private static $manifest = null;
 
 	/**
-	 * Generated manifest: mpdf version, source URL and files per pack.
+	 * Generated manifest: mPDF version and files per pack.
 	 *
 	 * @return array
 	 */
@@ -34,6 +34,17 @@ final class Font_Packs {
 			self::$manifest = require __DIR__ . '/font-packs.php';
 		}
 		return self::$manifest;
+	}
+
+	/**
+	 * Base URL of the font files: the ttfonts folder of the mPDF release the plugin bundles.
+	 *
+	 * @return string
+	 */
+	public static function source() {
+		// Fonts are downloaded once, on an administrator's request, verified and stored locally; nothing is
+		// loaded from this URL when pages or PDFs are viewed. Disclosed in readme.txt.
+		return 'https://raw.githubusercontent.com/mpdf/mpdf/' . rawurlencode( self::manifest()['mpdf'] ) . '/ttfonts/'; // phpcs:ignore PluginCheck.CodeAnalysis.Offloading.OffloadedContent -- one-time admin download, see above.
 	}
 
 	/**
@@ -209,7 +220,7 @@ final class Font_Packs {
 			wp_mkdir_p( self::dir() );
 		}
 
-		$tmp = download_url( self::manifest()['source'] . rawurlencode( $name ), 300 );
+		$tmp = download_url( self::source() . rawurlencode( $name ), 300 );
 		if ( is_wp_error( $tmp ) ) {
 			/* translators: 1: font file name, 2: error message */
 			return new WP_Error( 'wpbook_font_download', sprintf( __( 'Could not download %1$s: %2$s', 'wp-book' ), $name, $tmp->get_error_message() ), array( 'status' => 502 ) );

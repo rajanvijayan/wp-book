@@ -24,7 +24,7 @@ class Font_Packs_Test extends WPBook_TestCase {
 
 	public function test_manifest_lists_both_packs_with_hashes() {
 		$manifest = Font_Packs::manifest();
-		$this->assertStringStartsWith( 'https://raw.githubusercontent.com/mpdf/mpdf/', $manifest['source'] );
+		$this->assertSame( 'https://raw.githubusercontent.com/mpdf/mpdf/' . $manifest['mpdf'] . '/ttfonts/', Font_Packs::source() );
 		$this->assertArrayHasKey( 'Sun-ExtA.ttf', $manifest['packs']['cjk'] );
 		$this->assertArrayHasKey( 'XB Riyaz.ttf', $manifest['packs']['world'] );
 		foreach ( $manifest['packs'] as $files ) {
@@ -82,7 +82,7 @@ class Font_Packs_Test extends WPBook_TestCase {
 		$result = Font_Packs::install_next( 'cjk' );
 		$this->assertWPError( $result );
 		$this->assertSame( 'wpbook_font_hash', $result->get_error_code() );
-		$this->assertStringStartsWith( Font_Packs::manifest()['source'], $requested );
+		$this->assertSame( Font_Packs::source() . 'Sun-ExtA.ttf', $requested );
 		$this->assertFileDoesNotExist( Font_Packs::dir() . '/Sun-ExtA.ttf' );
 		$this->assertFalse( Font_Packs::is_installed( 'cjk' ) );
 	}
