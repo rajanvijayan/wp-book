@@ -68,12 +68,19 @@ final class Mpdf_Engine implements Pdf_Engine {
 	private $chapter_level = 0;
 
 	/**
+	 * Font packs the content needs but that are not installed.
+	 *
+	 * @var string[]
+	 */
+	private $missing_fonts = array();
+
+	/**
 	 * Render a book to a PDF file.
 	 *
 	 * @param Book_Renderer $renderer Renderer.
 	 * @param string        $path     Destination file.
 	 * @param callable|null $progress Progress callback (done, total).
-	 * @return array{pages: int}
+	 * @return array{pages: int, missing_fonts: string[]}
 	 */
 	public function render( Book_Renderer $renderer, $path, $progress = null ) {
 		$this->book          = $renderer->book();
@@ -98,7 +105,10 @@ final class Mpdf_Engine implements Pdf_Engine {
 			$this->mpdf->WriteHTML( '<p></p>' );
 		}
 		$this->mpdf->Output( $path, Destination::FILE );
-		return array( 'pages' => (int) $this->mpdf->page );
+		return array(
+			'pages'         => (int) $this->mpdf->page,
+			'missing_fonts' => array_values( $this->missing_fonts ),
+		);
 	}
 
 	/**
@@ -190,6 +200,10 @@ final class Mpdf_Engine implements Pdf_Engine {
 	 * @param array|null $next    Following section, if any.
 	 */
 	private function write_section( array $section, $next ) {
+		if ( ! empty( $section['html'] ) && count( $this->missing_fonts ) < 2 ) {
+			$text                = $section['html'] . ( isset( $section['title'] ) ? ' ' . $section['title'] : '' );
+			$this->missing_fonts = array_unique( array_merge( $this->missing_fonts, Font_Packs::missing_for( $text ) ) );
+		}
 		switch ( $section['type'] ) {
 			case 'cover':
 			case 'back-cover':

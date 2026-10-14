@@ -342,6 +342,32 @@ function EditorBody( props ) {
 					</a>
 				</Notice>
 			) }
+			{ justBuilt &&
+				job.status === 'done' &&
+				! busy &&
+				job.missing_fonts?.length > 0 && (
+					<Notice
+						status="warning"
+						isDismissible={ false }
+						actions={ [
+							{
+								label: __( 'Get fonts', 'wp-book' ),
+								onClick: () => setStep( 'interior' ),
+							},
+						] }
+					>
+						{ sprintf(
+							/* translators: %s: font pack names */
+							__(
+								'Some text needs fonts that are not installed, so it may show as empty boxes: %s. Download them under Interior → Languages, then build again.',
+								'wp-book'
+							),
+							job.missing_fonts
+								.map( ( pack ) => pack.name )
+								.join( ', ' )
+						) }
+					</Notice>
+				) }
 
 			<nav
 				className="wpbook-editor__steps"

@@ -15,6 +15,7 @@ use WPBook\Legacy\Legacy;
 use WPBook\Rest\Books_Controller;
 use WPBook\Rest\Content_Controller;
 use WPBook\Rest\Files_Controller;
+use WPBook\Rest\Fonts_Controller;
 use WPBook\Rest\Jobs_Controller;
 use WPBook\Rest\Meta_Controller;
 use WPBook\Rest\Preview_Controller;
@@ -70,6 +71,7 @@ final class Plugin {
 			new Meta_Controller(),
 			new Jobs_Controller(),
 			new Files_Controller(),
+			new Fonts_Controller(),
 			new Preview_Controller(),
 		);
 		foreach ( $controllers as $controller ) {

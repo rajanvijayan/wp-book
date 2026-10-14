@@ -99,3 +99,11 @@ export const previewBook = ( id, mode, config, title, signal ) =>
  */
 export const errorMessage = ( error ) =>
 	( error && error.message ) || String( error || '' );
+
+export const getFontPacks = () => apiFetch( { path: `${ NS }/fonts` } );
+
+export const installFontFile = ( pack ) =>
+	apiFetch( { path: `${ NS }/fonts/${ pack }`, method: 'POST' } );
+
+export const removeFontPack = ( pack ) =>
+	apiFetch( { path: `${ NS }/fonts/${ pack }`, method: 'DELETE' } );

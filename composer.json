@@ -31,6 +31,7 @@
             "@putenv COMPOSER_HOME=vendor/.strauss-home",
             "@php bin/strauss.phar",
             "@putenv COMPOSER_HOME=",
+            "@php bin/trim-fonts.php",
             "@composer dump-autoload --optimize"
         ],
         "post-install-cmd": [

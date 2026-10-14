@@ -1291,3 +1291,40 @@ $brand: var(--wp-admin-theme-color, #3858e9);
 		grid-template-columns: minmax(0, 1fr);
 	}
 }
+
+/* Font packs */
+.wpbook-font-packs {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.wpbook-font-pack {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 12px 14px;
+	border: 1px solid #e0e0e0;
+	border-radius: 8px;
+	background: #fff;
+
+	&__text {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		min-width: 0;
+	}
+
+	&__desc {
+		color: $muted;
+		font-size: 12px;
+	}
+
+	&__action {
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		gap: 4px;
+	}
+}

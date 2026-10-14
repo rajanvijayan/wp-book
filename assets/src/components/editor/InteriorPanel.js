@@ -10,6 +10,7 @@ import {
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import TemplateGallery from '../gallery/TemplateGallery';
+import FontPacks from './FontPacks';
 import { FontField } from './fields';
 
 export default function InteriorPanel( { meta, config, setSection } ) {
@@ -231,6 +232,11 @@ export default function InteriorPanel( { meta, config, setSection } ) {
 					/>
 				) }
 			</div>
+
+			<h3 className="wpbook-section-title">
+				{ __( 'Languages', 'wp-book' ) }
+			</h3>
+			<FontPacks />
 		</div>
 	);
 }

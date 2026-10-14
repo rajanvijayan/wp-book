@@ -55,12 +55,16 @@ Fine-tune the font, size, line height, justification, paragraph indents and drop
 * **Background generation** with a progress bar, so long books don't time out.
 * **Download history:** your last PDFs are kept and offered through a secure link that only logged-in editors can use.
 * Blocks and shortcodes are rendered; scripts, ads and remote content are left out.
-* Japanese, Arabic and other non-Latin scripts render correctly.
+* Chinese, Japanese, Korean, Arabic, Hebrew, Indic and other scripts are supported with optional font packs, downloaded with one click.
 * Works on PHP 7.4 to 8.4.
 
 = Privacy =
 
 BookPress does not send your content anywhere. PDFs are created on your server and stored in a protected folder in your uploads directory.
+
+= External service: font packs =
+
+BookPress includes fonts for Latin, Greek and Cyrillic text. Fonts for other scripts (Chinese, Japanese, Korean, Arabic, Hebrew, Indic scripts and more) are large, so they are not bundled. When an administrator clicks **Download** under **Interior → Languages**, BookPress downloads these fonts from the open-source [mPDF project](https://github.com/mpdf/mpdf) on GitHub (`raw.githubusercontent.com`). Nothing is downloaded unless an administrator asks for it, and only the font files are requested: no content or personal data is sent. Each file is checked against a stored SHA-256 checksum before it is used. GitHub's [terms of service](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) and [privacy statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) apply to these downloads.
 
 == Installation ==
 
@@ -95,6 +99,10 @@ Yes. Copy any file from the plugin's `templates/` folder to a `bookpress/` folde
 
 The old **Settings → WP Book** screen now opens BookPress. Custom templates added with the `wp_book_get_templates` filter appear as legacy interior templates. Books from 1.x were never saved, so there is nothing to migrate. Create a book and add your posts.
 
+= My book has Chinese, Japanese, Arabic or Hindi text. Why do I see empty boxes? =
+
+These scripts need fonts that are too large to bundle with the plugin. Go to **Interior → Languages** in the book editor and download the font pack for your language (an administrator must do this once), then build the book again. BookPress tells you after a build when a font pack is missing.
+
 = Which PHP and WordPress versions are supported? =
 
 WordPress 6.4 or later and PHP 7.4 or later, including PHP 8.4.
@@ -119,6 +127,7 @@ WordPress 6.4 or later and PHP 7.4 or later, including PHP 8.4.
 * New: drag-and-drop chapters, a content picker with filters, and a live preview.
 * New: background generation with progress, so large books don't time out.
 * New: trade book sizes, mirrored margins, watermark and password protection.
+* New: optional font packs for Chinese, Japanese, Korean and other scripts, which keeps the plugin download small.
 * Security: books only include content the user may read, and downloads require a logged-in user who can manage books.
 * Requirements: WordPress 6.4 or later.
 

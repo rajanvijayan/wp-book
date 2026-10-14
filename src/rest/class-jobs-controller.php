@@ -11,6 +11,7 @@ use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
 use WPBook\Files\File_Store;
+use WPBook\Render\Font_Packs;
 use WPBook\Jobs\Generate_Book_Job;
 
 /**
@@ -93,6 +94,19 @@ final class Jobs_Controller extends Rest_Controller {
 			'total'   => (int) $job['total'],
 			'message' => $job['message'],
 		);
+		if ( ! empty( $job['fonts'] ) ) {
+			// Font packs the book needs; the editor offers to install them.
+			$labels               = Font_Packs::labels();
+			$out['missing_fonts'] = array();
+			foreach ( $job['fonts'] as $key ) {
+				if ( isset( $labels[ $key ] ) && ! Font_Packs::is_installed( $key ) ) {
+					$out['missing_fonts'][] = array(
+						'key'  => $key,
+						'name' => $labels[ $key ]['name'],
+					);
+				}
+			}
+		}
 		if ( 'done' === $job['status'] && $job['file'] ) {
 			$record      = File_Store::find( $book_id, $job['file'] );
 			$out['file'] = $record ? Files_Controller::file_response( $book_id, $record ) : null;

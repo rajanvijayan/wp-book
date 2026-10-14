@@ -159,6 +159,7 @@ final class Generate_Book_Job {
 			$job['status'] = 'done';
 			$job['file']   = $record['id'];
 			$job['pages']  = $result['pages'];
+			$job['fonts']  = $result['missing_fonts'];
 
 			if ( $book->config['output']['print_cover'] ) {
 				$wrap_path = Mpdf_Engine::temp_file( 'wpbook-wrap-' . $book_id );

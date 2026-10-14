@@ -123,8 +123,38 @@ final class Font_Manager {
 			$font_data[ $family['css'] ] = $entry;
 		}
 
-		$config['fontDir']  = array_merge( $dirs, array( self::bundled_dir() ) );
+		// Without WordPress (tests/smoke-pdf.php) there is no uploads folder, so no downloaded packs.
+		if ( function_exists( 'wp_upload_dir' ) ) {
+			$dirs[] = Font_Packs::dir();
+		}
+		$dirs[] = self::bundled_dir();
+
+		// The release ships mPDF with DejaVu only; drop families whose files are not installed so that
+		// mPDF falls back to the default font instead of failing on a missing file.
+		foreach ( $font_data as $family => $files ) {
+			if ( ! self::font_file_exists( $dirs, $files['R'] ) ) {
+				unset( $font_data[ $family ] );
+			}
+		}
+
+		$config['fontDir']  = $dirs;
 		$config['fontdata'] = $font_data;
 		return $config;
+	}
+
+	/**
+	 * Whether a font file is in one of the font folders.
+	 *
+	 * @param string[] $dirs Font folders.
+	 * @param string   $file File name relative to a folder.
+	 * @return bool
+	 */
+	private static function font_file_exists( array $dirs, $file ) {
+		foreach ( $dirs as $dir ) {
+			if ( file_exists( $dir . '/' . $file ) ) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
