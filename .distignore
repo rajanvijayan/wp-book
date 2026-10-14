@@ -5,12 +5,12 @@
 /node_modules
 /tests
 /vendor/bin
+/bin
 .distignore
 .gitignore
 .gitattributes
 .editorconfig
 composer.lock
-package.json
 package-lock.json
 phpcs.xml.dist
 phpunit.xml.dist

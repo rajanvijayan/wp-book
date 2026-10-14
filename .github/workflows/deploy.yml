@@ -3,7 +3,8 @@ name: Deploy to WordPress.org
 on:
   push:
     tags:
-      - '[0-9]+.[0-9]+.[0-9]+*'
+      # Exact versions only; release candidates (e.g. 2.0.0-rc.1) never deploy to WordPress.org.
+      - '[0-9]+.[0-9]+.[0-9]+'
 
 permissions:
   contents: write
@@ -33,12 +34,21 @@ jobs:
           tools: composer
           coverage: none
 
-      # vendor/ is not in Git; wp-book.php requires vendor/autoload.php, so build it here.
+      # vendor/ and vendor-prefixed/ are not in Git; Strauss prefixes mPDF in composer's post-install step.
       - name: Install production dependencies
         run: composer install --no-dev --prefer-dist --no-progress --no-interaction --optimize-autoloader
 
       - name: Smoke-test autoloader
-        run: php -r 'require "vendor/autoload.php"; foreach (["Mpdf\\Mpdf", "WPBook\\Main"] as $c) { if (!class_exists($c)) { fwrite(STDERR, "missing $c\n"); exit(1); } }'
+        run: php -r 'require "vendor/autoload.php"; require "vendor-prefixed/autoload.php"; foreach (["WPBook\\Vendor\\Mpdf\\Mpdf", "WPBook\\Plugin"] as $c) { if (!class_exists($c)) { fwrite(STDERR, "missing $c\n"); exit(1); } }'
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+
+      # build/ is not in Git; the admin app is compiled here and shipped with its source in assets/src.
+      - name: Build admin app
+        run: npm ci && npm run build
 
       - name: Generate a PDF
         run: php tests/smoke-pdf.php

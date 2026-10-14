@@ -1,0 +1,8 @@
+/* Classic Novel: serif text, centred chapter openings, small-caps labels. */
+.wpb-chapter-opener { text-align: center; padding-top: 18%; margin-bottom: 2.2em; }
+.wpb-chapter-label { text-align: center; font-variant: small-caps; letter-spacing: 3pt; font-size: 0.9em; }
+h1.wpb-chapter-title { text-align: center; font-size: 2.1em; font-weight: normal; font-style: italic; }
+.wpb-chapter-meta, .wpb-chapter-excerpt { text-align: center; }
+.wpb-chapter-opener:after { content: ""; }
+h2, h3 { font-weight: normal; font-style: italic; }
+.wpb-header { font-variant: small-caps; letter-spacing: 1pt; }
