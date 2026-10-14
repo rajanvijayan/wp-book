@@ -11,6 +11,7 @@ use WPBook\Admin\Admin_App;
 use WPBook\Books\Book_Post_Type;
 use WPBook\Files\File_Store;
 use WPBook\Jobs\Generate_Book_Job;
+use WPBook\Legacy\Legacy;
 use WPBook\Rest\Books_Controller;
 use WPBook\Rest\Content_Controller;
 use WPBook\Rest\Files_Controller;
@@ -53,6 +54,7 @@ final class Plugin {
 		add_action( Generate_Book_Job::HOOK, array( Generate_Book_Job::class, 'handle' ), 10, 3 );
 		add_action( 'before_delete_post', array( File_Store::class, 'on_delete_post' ) );
 
+		Legacy::register();
 		if ( is_admin() ) {
 			( new Admin_App() )->register();
 		}

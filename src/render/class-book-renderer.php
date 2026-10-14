@@ -110,7 +110,7 @@ final class Book_Renderer {
 		$template  = Template_Registry::get( $key );
 		$body_font = '' !== $interior['font'] ? $interior['font'] : $template['font'];
 
-		$css  = Template_Loader::contents(
+		$css = Template_Loader::contents(
 			'interior/base.css',
 			array(
 				'body_font'    => Font_Manager::css_family( $body_font ),
@@ -124,7 +124,8 @@ final class Book_Renderer {
 				'accent'       => $this->book->config['cover']['accent'],
 			)
 		);
-		$css .= Template_Loader::contents(
+		// Legacy (1.x) templates carry their CSS inline; built-in ones live in templates/interior/{key}/book.css.
+		$css .= isset( $template['css'] ) ? $template['css'] : Template_Loader::contents(
 			'interior/' . $key . '/book.css',
 			array(
 				'body_font'    => Font_Manager::css_family( $body_font ),

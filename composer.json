@@ -26,7 +26,9 @@
         "prefix-namespaces": [
             "@strauss-install",
             "@putenv COMPOSER_AUTH={}",
+            "@putenv COMPOSER_HOME=vendor/.strauss-home",
             "@php bin/strauss.phar",
+            "@putenv COMPOSER_HOME=",
             "@composer dump-autoload --optimize"
         ],
         "post-install-cmd": [
