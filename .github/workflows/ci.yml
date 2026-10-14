@@ -67,6 +67,45 @@ jobs:
       - name: Generate a PDF
         run: php tests/smoke-pdf.php
 
+  phpunit:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Oldest supported pair and newest pair.
+          - php: '7.4'
+            wp: '6.4'
+          - php: '8.3'
+            wp: 'latest'
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: gd, mbstring, mysqli
+          tools: composer
+          coverage: none
+
+      - run: composer install --no-progress --prefer-dist --no-interaction
+
+      - name: Install WordPress test library
+        run: bin/install-wp-tests.sh wordpress_test root root 127.0.0.1:3306 ${{ matrix.wp }}
+
+      - name: PHPUnit
+        run: vendor/bin/phpunit
+        env:
+          WP_TESTS_DIR: /tmp/wordpress-tests-lib
+
   plugin-check:
     runs-on: ubuntu-latest
     steps:

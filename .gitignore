@@ -7,3 +7,4 @@
 /bin/strauss.phar
 /node_modules/
 /build/
+/.phpunit.result.cache

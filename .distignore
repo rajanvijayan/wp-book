@@ -18,3 +18,4 @@ phpunit.xml.dist
 README.md
 RELEASING.md
 CLAUDE.md
+.phpunit.result.cache
