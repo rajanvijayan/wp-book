@@ -43,10 +43,8 @@ Generated books are saved to `wp-content/uploads/wp-book/`.
 
 | | |
 |---|---|
-| WordPress | 3.8 or later |
-| PHP | 7.1 or 7.2 |
-
-Version 1.0.1 bundles mPDF 7.1, which does not support PDF generation on PHP 8.
+| WordPress | 4.4 or later |
+| PHP | 7.4 or later, including 8.x |
 
 ## Installation
 
@@ -66,16 +64,16 @@ composer lint         # PHPCS: WordPress Coding Standards + PHPCompatibilityWP
 composer lint:fix     # auto-fix what PHPCBF can
 ```
 
-To test it locally, symlink or copy the folder into `wp-content/plugins/` of a WordPress install that runs PHP 7.1 or 7.2.
+To test it locally, symlink or copy the folder into `wp-content/plugins/` of a WordPress install.
 
 ### Project layout
 
 ```
 wp-book.php           Plugin bootstrap
-src/                  PSR-4 classes (WPBook\ namespace)
-  Main.php            Wires up hooks
-  admin/Controller.php  Settings page, AJAX handlers, PDF generation
-  view/Controller.php   PDF templates
+src/                  Classes in the WPBook\ namespace (Composer classmap)
+  class-main.php      Wires up hooks
+  admin/class-controller.php  Settings page, AJAX handlers, PDF generation
+  view/class-controller.php   PDF templates
   utils/              Loader, activation, deactivation, i18n
 assets/               Admin CSS and JS
 languages/            Translation template (wp-book.pot)

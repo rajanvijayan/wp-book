@@ -1,10 +1,10 @@
 === WP Book ===
 Contributors: rajanit2000
 Tags: pdf, ebook, book, export, mpdf
-Requires at least: 3.8
-Tested up to: 4.9.8
-Requires PHP: 7.1
-Stable tag: 1.0.1
+Requires at least: 4.4
+Tested up to: 7.1
+Requires PHP: 7.4
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,7 +60,7 @@ Generated books are saved to `wp-content/uploads/wp-book/`, and you can download
 
 = Which PHP versions are supported? =
 
-WP Book 1.0.1 bundles mPDF 7.1, which supports PHP 7.1 and 7.2. Generating a PDF on PHP 8 is not supported in this release.
+PHP 7.4 and later, including PHP 8.x. WP Book bundles mPDF 8.
 
 = I only see a blank page after clicking Generate Book. =
 
@@ -74,7 +74,7 @@ You can also generate a book with fewer posts.
 
 = I get "Temporary files directory ... is not writable". =
 
-mPDF needs to write temporary files to `wp-content/plugins/wp-book/vendor/mpdf/mpdf/tmp`. Make sure that directory exists and that your web server user can write to it. Ask your host if you are unsure how to change the permissions.
+WP Book stores mPDF's temporary files in a `wp-book` folder inside your server's temporary directory, as reported by WordPress's `get_temp_dir()`. Make sure your web server user can write to that directory, or set `WP_TEMP_DIR` in `wp-config.php` to a writable path.
 
 = Where are the generated PDF files stored? =
 
@@ -98,6 +98,16 @@ In `wp-content/uploads/wp-book/`.
 
 == Changelog ==
 
+= 1.1.0 =
+* New: PHP 8 support. WP Book now bundles mPDF 8.3, which works on PHP 7.4 through 8.5.
+* New: Japanese, Arabic and other non-Latin scripts render in the PDF instead of empty boxes.
+* Fix: The Sort option now orders posts as selected.
+* Fix: mPDF temporary files are written to the server's temp directory, so a read-only plugin folder no longer stops PDF generation.
+* Fix: PHP warnings and notices on PHP 8.
+* Security: All admin screen output is escaped and request input is validated.
+* Security: Updated bundled libraries (mPDF 8.3.1, FPDI 2.6.9) to fix known vulnerabilities.
+* Requirements: PHP 7.4 or later and WordPress 4.4 or later.
+
 = 1.0.1 =
 * Rewrote the plugin description, FAQ and screenshot captions.
 * New plugin banners.
@@ -106,3 +116,8 @@ In `wp-content/uploads/wp-book/`.
 
 = 1.0 =
 * Initial release.
+
+== Upgrade Notice ==
+
+= 1.1.0 =
+Adds PHP 8 support and fixes security issues in the bundled PDF libraries. Requires PHP 7.4 or later.

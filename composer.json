@@ -4,8 +4,8 @@
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
     "require": {
-        "php": ">=7.1",
-        "mpdf/mpdf": "7.1.5"
+        "php": ">=7.4",
+        "mpdf/mpdf": "^8.2"
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
@@ -13,9 +13,9 @@
         "wp-coding-standards/wpcs": "^3.1"
     },
     "autoload": {
-        "psr-4": {
-            "WPBook\\": "src/"
-        }
+        "classmap": [
+            "src/"
+        ]
     },
     "scripts": {
         "lint": "phpcs",
@@ -23,7 +23,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.2.34"
+            "php": "7.4.33"
         },
         "optimize-autoloader": true,
         "sort-packages": true,
