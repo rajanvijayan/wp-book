@@ -307,7 +307,7 @@ final class Mpdf_Engine implements Pdf_Engine {
 		if ( 0 === $this->mpdf->page ) {
 			$this->mpdf->WriteHTML( $this->base_regions() );
 		}
-		$this->mpdf->WriteHTML( '@page wpbtoc { odd-header-name: html_wpbblank; even-header-name: html_wpbblank; odd-footer-name: html_wpbfo; even-footer-name: html_wpbfe;' . $this->page_background() . ' }', HTMLParserMode::HEADER_CSS );
+		$this->mpdf->WriteHTML( '@page wpbtoc { odd-header-name: html_wpbblank; even-header-name: html_wpbblank; odd-footer-name: html_wpbblank; even-footer-name: html_wpbblank;' . $this->page_background() . ' }', HTMLParserMode::HEADER_CSS );
 
 		$args = array(
 			'links'            => 1,

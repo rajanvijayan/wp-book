@@ -203,12 +203,15 @@ function EditorBody( props ) {
 		initialJob,
 	} = props;
 
+	// The "ready" notice is only for a build that finishes while the editor is open.
+	const [ justBuilt, setJustBuilt ] = useState( false );
 	const {
 		job,
 		error: jobError,
 		start,
 		busy,
 	} = useJob( bookId, initialJob, ( done ) => {
+		setJustBuilt( true );
 		if ( done.file ) {
 			const fresh = [ done.print_cover, done.file ].filter( Boolean );
 			setFiles( ( list ) => [
@@ -323,7 +326,7 @@ function EditorBody( props ) {
 					) }
 				</div>
 			) }
-			{ job.status === 'done' && job.file && ! busy && (
+			{ justBuilt && job.status === 'done' && job.file && ! busy && (
 				<Notice
 					status="success"
 					isDismissible={ false }

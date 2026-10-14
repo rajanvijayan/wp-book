@@ -58,7 +58,7 @@ final class Jobs_Controller extends Rest_Controller {
 		if ( ! $book->post_ids() ) {
 			return new WP_Error( 'wpbook_empty', __( 'Add at least one chapter before generating the book.', 'wp-book' ), array( 'status' => 400 ) );
 		}
-		return $this->response( $book->id, Generate_Book_Job::enqueue( $book ) );
+		return self::response( $book->id, Generate_Book_Job::enqueue( $book ) );
 	}
 
 	/**
@@ -72,17 +72,17 @@ final class Jobs_Controller extends Rest_Controller {
 		if ( is_wp_error( $book ) ) {
 			return $book;
 		}
-		return $this->response( $book->id, Generate_Book_Job::status( $book ) );
+		return self::response( $book->id, Generate_Book_Job::status( $book ) );
 	}
 
 	/**
-	 * Job JSON, with the finished file when done.
+	 * Job JSON for the API, with the finished files when done. Internal fields (user, action) stay private.
 	 *
 	 * @param int        $book_id Book ID.
 	 * @param array|null $job     Job state.
 	 * @return array
 	 */
-	private function response( $book_id, $job ) {
+	public static function response( $book_id, $job ) {
 		if ( ! $job ) {
 			return array( 'status' => 'idle' );
 		}

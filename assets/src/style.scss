@@ -808,6 +808,10 @@ $brand: var(--wp-admin-theme-color, #3858e9);
 
 	&__steps {
 		grid-area: steps;
+		position: sticky;
+		top: 90px;
+		align-self: start;
+		min-height: calc(100vh - 122px);
 		display: flex;
 		flex-direction: column;
 		gap: 4px;

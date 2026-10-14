@@ -250,7 +250,7 @@ final class Books_Controller extends Rest_Controller {
 				'author'   => $book->author_name(),
 			),
 			'latest_file' => $latest ? Files_Controller::file_response( $book->id, $latest ) : null,
-			'job'         => Generate_Book_Job::get( $book->id ),
+			'job'         => Jobs_Controller::response( $book->id, Generate_Book_Job::get( $book->id ) ),
 		);
 	}
 

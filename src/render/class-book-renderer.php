@@ -134,6 +134,11 @@ final class Book_Renderer {
 				'primary'      => $this->book->config['cover']['primary'],
 			)
 		);
+		// Keep featured images on the chapter's opening page: at most 40% of the text area height.
+		$layout           = $this->book->config['layout'];
+		list( , $page_h ) = \WPBook\Books\Page_Sizes::for_layout( $layout );
+		$max_h            = round( ( $page_h - $layout['margin_top'] - $layout['margin_bottom'] ) * 0.4, 1 );
+		$css             .= '.wpb-featured img { max-height: ' . $max_h . 'mm; width: auto; max-width: 100%; }';
 		if ( $interior['drop_caps'] ) {
 			// Raised initial: mPDF supports neither ::first-letter nor text wrapping around a floated letter.
 			$css .= '.wpb-dropcap { font-size: 2.8em; line-height: 1; font-family: ' . Font_Manager::css_family( $template['heading_font'] ) . '; color: ' . $this->book->config['cover']['accent'] . '; }';
