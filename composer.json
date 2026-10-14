@@ -25,6 +25,7 @@
         "strauss-install": "test -f ./bin/strauss.phar || curl -fsSL -o bin/strauss.phar https://github.com/BrianHenryIE/strauss/releases/download/0.22.6/strauss.phar",
         "prefix-namespaces": [
             "@strauss-install",
+            "@putenv COMPOSER_AUTH={}",
             "@php bin/strauss.phar",
             "@composer dump-autoload --optimize"
         ],
