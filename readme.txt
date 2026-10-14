@@ -1,96 +1,102 @@
 === WP Book ===
-Contributors: rajanit2000, syedkadhar143
-Tags: pdf, mpdf, post, pages, download  
-Requires at least: 3.8  
-Tested up to: 4.9.8  
-Stable tag: 1.0   
+Contributors: rajanit2000
+Tags: pdf, ebook, book, export, mpdf
+Requires at least: 3.8
+Tested up to: 4.9.8
+Requires PHP: 7.1
+Stable tag: 1.0
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Download your posts, pages and custom post as a PDF Book in few clicks
+Turn your posts, pages and custom post types into a downloadable PDF book in a few clicks.
 
 == Description ==
 
-Wp Book is a WordPress Plugin that allows you to create PDF book for your posts, pages custom posts on different conditions and filters.
+WP Book collects content from your site and compiles it into a single PDF book. Pick the posts you want, put them in the order you want, choose a page layout and template, and download the result. No coding is needed.
 
-Check out the [WPBook Overview Video](https://www.youtube.com/watch?v=nBIG8jT8aNY) below.
+Watch the [WP Book overview video](https://www.youtube.com/watch?v=nBIG8jT8aNY):
 
 https://www.youtube.com/watch?v=nBIG8jT8aNY
 
-### Features
+= Choose your content =
 
-The following conditions and filters are supported.
+* **Post type**: build a book from posts, pages or any public custom post type.
+* **Number of posts**: limit how many entries go into the book.
+* **Order and sort**: sort entries by ID, author, title, slug, type, published date, modified date, parent or at random, in ascending or descending order.
+* **Drag and drop**: rearrange the selected entries by hand before generating the book.
 
-#### Post Filters options
+= Shape the PDF =
 
-- Post type
-- Number of posts
-- Post order
-- Post order by
+* **Page format**: more than 50 paper sizes, including the A, B, C and RA series, Letter, Legal, Tabloid and Executive.
+* **Orientation**: portrait or landscape.
+* **Page breaks**: optionally start each post on a new page.
+* **Header and footer**: add custom text with placeholders such as `{PAGENO}` for the page number and `{DATE j-m-Y}` for the current date.
+* **Templates**: choose the Default, Style 1 or Dark template.
 
-#### PDF Layout options
-
-- Post type
-- Number of posts
-- Post order
-- Post order by
-
-#### Sorting
-
-- Support manual sorting drag and drop
+Generated books are saved to `wp-content/uploads/wp-book/`, and you can download them right after they are created.
 
 == Installation ==
 
-The simplest way to install the plugin is to use the built-in automatic plugin installer. Go to plugins -> Add New and then enter `wp-book` to automatically install it.
+= From your WordPress dashboard =
 
-If for some reason the above method doesn't work then you can download the plugin as a zip file, extract it and then use your favorite FTP client and then upload the contents of the zip file to the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
+1. Go to **Plugins → Add New**.
+2. Search for **WP Book**.
+3. Click **Install Now**, then **Activate**.
 
-Goto `Settings > WP Book`
+= Manual installation =
 
-== Credits ==
+1. Download the plugin ZIP file.
+2. Go to **Plugins → Add New → Upload Plugin**, choose the ZIP file and click **Install Now**. You can also extract the ZIP file and upload the `wp-book` folder to `wp-content/plugins/` over FTP.
+3. Activate **WP Book** on the **Plugins** screen.
 
-Thanks to [mPDF](https://mpdf.github.io/) PHP library, create pdf using PHP.
-Thanks to [jQueryUI](https://jqueryui.com/) JavaScript library, which the Plugin uses.
-Thanks to [select2](https://select2.github.io/) JavaScript library, which the Plugin uses.
-Thanks to [Syed Kadhar](https://profiles.wordpress.org/syedkadhar143/) for the design requirements 
+= Usage =
+
+1. Go to **Settings → WP Book**.
+2. Set your post filters and PDF options.
+3. Drag the listed entries into the order you want.
+4. Click **Generate Book**, then **Download PDF**.
 
 == Frequently Asked Questions ==
 
-= After installing the Plugin, I just see a blank page. =
+= Which PHP versions are supported? =
 
-This can happen if you have huge number of posts and your server is very underpowered. Check your PHP error log to see if there are any errors and correct them. The most common problems are script timeout or running out of memory. Change your PHP.ini file and increase the script timeout and/or amount of memory used by PHP process. 
+WP Book 1.0 bundles mPDF 7.1, which supports PHP 7.1 and 7.2. Generating a PDF on PHP 8 is not supported in this release.
 
-In particular try to change the following settings
+= I only see a blank page after clicking Generate Book. =
 
-*   `max_execution_time = 600` - Maximum execution time of each script, in seconds
-*   `max_input_time = 30` - Maximum amount of time each script may spend parsing request data
-*   `memory_limit = 256M` - Maximum amount of memory a script may consume
+This usually means a large number of posts on a server with limited resources. Check your PHP error log. The most common causes are script timeouts and running out of memory. Try raising these values in `php.ini`:
 
-= Temporary files directory "/wp-book/vendor/mpdf/mpdf/src/Config/../../tmp" is not writable issue. =
+* `max_execution_time = 600`: the maximum execution time of each script, in seconds.
+* `max_input_time = 30`: the maximum time each script may spend parsing request data.
+* `memory_limit = 256M`: the maximum amount of memory a script may use.
 
-This can happen when the plugin's tmp directory does not have write permission. You need to setup 777 permission for tmp directory. 
+You can also generate a book with fewer posts.
 
-Its located `/wp-content/plugins/wp-book/vendor/mpdf/mpdf/tmp`
+= I get "Temporary files directory ... is not writable". =
+
+mPDF needs to write temporary files to `wp-content/plugins/wp-book/vendor/mpdf/mpdf/tmp`. Make sure that directory exists and that your web server user can write to it. Ask your host if you are unsure how to change the permissions.
+
+= Where are the generated PDF files stored? =
+
+In `wp-content/uploads/wp-book/`.
 
 == Screenshots ==
 
-1. Home page for WP Book.
+1. The WP Book screen with post filters, PDF options and the list of entries to include.
+2. A book generated successfully and ready to download.
+3. A sample page from a generated PDF.
+4. Choosing the post type.
+5. Choosing the page format.
+6. Adding a custom header and footer with page number and date placeholders.
+7. Choosing a predefined template.
 
-2. File created successfully.
+== Credits ==
 
-3. PDF sample
-
-4. Post type filters
-
-5. Page format options
-
-6. Header and Footer
-
-7. Predefined templates
+* [mPDF](https://mpdf.github.io/): PHP library used to generate the PDF files.
+* [jQuery UI](https://jqueryui.com/): used for drag and drop sorting.
+* [Select2](https://select2.org/): used for the searchable select boxes.
 
 == Changelog ==
 
-= v1.0 =
-
-- Initial release
-
-
-
+= 1.0 =
+* Initial release.
