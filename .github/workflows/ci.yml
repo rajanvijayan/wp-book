@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  phpcs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+          coverage: none
+
+      - run: composer install --no-progress --prefer-dist
+
+      # Non-blocking until the imported code has a clean baseline; then remove continue-on-error.
+      - name: PHPCS (WordPress Coding Standards)
+        continue-on-error: true
+        run: composer lint
+
+  plugin-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: WordPress Plugin Check
+        if: hashFiles('readme.txt') != ''
+        uses: wordpress/plugin-check-action@v1
+        with:
+          build-dir: './'
+          exclude-directories: '.github,.wordpress-org,vendor,node_modules'
