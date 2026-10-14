@@ -194,8 +194,9 @@ final class Generate_Book_Job {
 	 */
 	private static function raise_limits() {
 		wp_raise_memory_limit( 'admin' );
-		if ( function_exists( 'set_time_limit' ) ) {
-			@set_time_limit( 0 ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- disabled on some hosts.
+		// Action Scheduler's helper raises the time limit only where the host allows it.
+		if ( class_exists( 'ActionScheduler_Compatibility' ) ) {
+			\ActionScheduler_Compatibility::raise_time_limit( 0 );
 		}
 	}
 
