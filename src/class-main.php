@@ -74,7 +74,7 @@ class Main {
 	public function __construct() {
 
 		$this->wp_book = 'wp-book';
-		$this->version = '1.0.1';
+		$this->version = '1.1.0';
 		$this->loader  = new utils\Loader();
 
 		$view            = new view\Controller();
