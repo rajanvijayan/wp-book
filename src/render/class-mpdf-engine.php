@@ -9,6 +9,7 @@ namespace WPBook\Render;
 
 use WPBook\Books\Book;
 use WPBook\Books\Page_Sizes;
+use WPBook\Templates\Template_Registry;
 use WPBook\Vendor\Mpdf\HTMLParserMode;
 use WPBook\Vendor\Mpdf\Mpdf;
 use WPBook\Vendor\Mpdf\Output\Destination;
@@ -107,7 +108,7 @@ final class Mpdf_Engine implements Pdf_Engine {
 	 */
 	private function config() {
 		$layout = $this->book->config['layout'];
-		$size   = Page_Sizes::dimensions( $layout['format'], $layout['orientation'] );
+		$size   = Page_Sizes::for_layout( $layout );
 		$config = array(
 			'mode'                       => 'utf-8',
 			'format'                     => $size,
@@ -214,7 +215,17 @@ final class Mpdf_Engine implements Pdf_Engine {
 	 */
 	private function base_css() {
 		return '@page wpbcover { margin: 0; margin-header: 0; margin-footer: 0; odd-header-name: html_wpbblank; even-header-name: html_wpbblank; odd-footer-name: html_wpbblank; even-footer-name: html_wpbblank; }'
-			. '@page wpbfront { odd-header-name: html_wpbblank; even-header-name: html_wpbblank; odd-footer-name: html_wpbblank; even-footer-name: html_wpbblank; }';
+			. '@page wpbfront { odd-header-name: html_wpbblank; even-header-name: html_wpbblank; odd-footer-name: html_wpbblank; even-footer-name: html_wpbblank;' . $this->page_background() . ' }';
+	}
+
+	/**
+	 * Background colour declaration for content pages, from the interior template.
+	 *
+	 * @return string
+	 */
+	private function page_background() {
+		$template = Template_Registry::get( $this->book->config['interior']['template'] );
+		return '' !== $template['page_background'] ? ' background-color: ' . $template['page_background'] . ';' : '';
 	}
 
 	/**
@@ -259,7 +270,7 @@ final class Mpdf_Engine implements Pdf_Engine {
 				'pageselector' => 'wpbcover',
 			)
 		);
-		list( , $height ) = Page_Sizes::dimensions( $this->book->config['layout']['format'], $this->book->config['layout']['orientation'] );
+		list( , $height ) = Page_Sizes::for_layout( $this->book->config['layout'] );
 		// The design is absolutely positioned; this full-height block gives the page real content so mPDF
 		// does not skip the following page break.
 		$this->mpdf->WriteHTML(
@@ -296,7 +307,7 @@ final class Mpdf_Engine implements Pdf_Engine {
 		if ( 0 === $this->mpdf->page ) {
 			$this->mpdf->WriteHTML( $this->base_regions() );
 		}
-		$this->mpdf->WriteHTML( '@page wpbtoc { odd-header-name: html_wpbblank; even-header-name: html_wpbblank; odd-footer-name: html_wpbfo; even-footer-name: html_wpbfe; }', HTMLParserMode::HEADER_CSS );
+		$this->mpdf->WriteHTML( '@page wpbtoc { odd-header-name: html_wpbblank; even-header-name: html_wpbblank; odd-footer-name: html_wpbfo; even-footer-name: html_wpbfe;' . $this->page_background() . ' }', HTMLParserMode::HEADER_CSS );
 
 		$args = array(
 			'links'            => 1,
@@ -386,7 +397,7 @@ final class Mpdf_Engine implements Pdf_Engine {
 			$this->mpdf->WriteHTML( $regions );
 		}
 		$this->mpdf->WriteHTML(
-			"@page {$name} { odd-header-name: {$odd}; even-header-name: {$even}; odd-footer-name: html_wpbfo; even-footer-name: html_wpbfe; }"
+			"@page {$name} { odd-header-name: {$odd}; even-header-name: {$even}; odd-footer-name: html_wpbfo; even-footer-name: html_wpbfe;" . $this->page_background() . ' }'
 			// mPDF merges named :first rules after resolving odd/even names, so the plain "header" property is used here.
 			. "@page {$name} :first { header: html_wpbblank; }",
 			HTMLParserMode::HEADER_CSS

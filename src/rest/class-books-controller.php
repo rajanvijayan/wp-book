@@ -235,7 +235,7 @@ final class Books_Controller extends Rest_Controller {
 	 * @return array
 	 */
 	public function summary( Book $book ) {
-		$files = File_Store::records( $book->id );
+		$latest = File_Store::latest( $book->id );
 		return array(
 			'id'          => $book->id,
 			'title'       => $book->title,
@@ -249,7 +249,7 @@ final class Books_Controller extends Rest_Controller {
 				'title'    => $book->cover_title(),
 				'author'   => $book->author_name(),
 			),
-			'latest_file' => $files ? Files_Controller::file_response( $book->id, $files[0] ) : null,
+			'latest_file' => $latest ? Files_Controller::file_response( $book->id, $latest ) : null,
 			'job'         => Generate_Book_Job::get( $book->id ),
 		);
 	}

@@ -1,0 +1,15 @@
+/* Manual: numbered sections, code blocks and callouts for documentation. */
+.wpb-chapter-opener { padding-top: 6%; margin-bottom: 1.5em; }
+.wpb-chapter-label { font-size: 0.85em; font-weight: bold; color: {{accent}}; letter-spacing: 0.5pt; }
+h1.wpb-chapter-title { font-size: 2em; font-weight: bold; color: {{primary}}; padding-bottom: 0.3em; border-bottom: 0.8pt solid #d0d4da; }
+h2 { font-size: 1.35em; font-weight: bold; color: {{primary}}; padding-left: 0.4em; border-left: 3pt solid {{accent}}; }
+h3 { font-size: 1.1em; font-weight: bold; color: #333333; }
+p { text-align: left; }
+pre { background: #0d1117; color: #e6edf3; border-radius: 4pt; padding: 0.8em 1em; font-size: 0.8em; line-height: 1.45; }
+code { background: #eef1f5; padding: 0 2pt; border-radius: 2pt; }
+pre code { background: none; padding: 0; }
+blockquote { font-style: normal; background: #fff8e5; border-left: 3pt solid #f0b849; color: #3b2f13; padding: 0.6em 0.9em; }
+table { width: 100%; }
+th { background: #f0f2f5; text-align: left; }
+.wpb-header td { font-weight: bold; color: {{primary}}; }
+.wpb-num { color: {{accent}}; margin-right: 0.3em; }

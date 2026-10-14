@@ -30,6 +30,7 @@ final class Cover_Registry {
 					'accent'     => '#ff7a59',
 					'text_color' => '#ffffff',
 					'title_font' => 'playfair',
+					'align'      => 'center',
 				),
 			),
 			'minimal'       => array(
@@ -42,6 +43,7 @@ final class Cover_Registry {
 					'accent'     => '#e4572e',
 					'text_color' => '#1d1d1f',
 					'title_font' => 'inter',
+					'align'      => 'left',
 				),
 			),
 			'classic-novel' => array(
@@ -54,6 +56,7 @@ final class Cover_Registry {
 					'accent'     => '#c9a227',
 					'text_color' => '#f4ecd8',
 					'title_font' => 'playfair',
+					'align'      => 'center',
 				),
 			),
 			'bold-type'     => array(
@@ -66,6 +69,7 @@ final class Cover_Registry {
 					'accent'     => '#111111',
 					'text_color' => '#111111',
 					'title_font' => 'bebas',
+					'align'      => 'left',
 				),
 			),
 			'geometric'     => array(
@@ -78,6 +82,7 @@ final class Cover_Registry {
 					'accent'     => '#e36414',
 					'text_color' => '#ffffff',
 					'title_font' => 'montserrat',
+					'align'      => 'left',
 				),
 			),
 			'photo'         => array(
@@ -90,6 +95,7 @@ final class Cover_Registry {
 					'accent'     => '#ffffff',
 					'text_color' => '#ffffff',
 					'title_font' => 'playfair',
+					'align'      => 'left',
 				),
 			),
 			'photo-frame'   => array(
@@ -102,6 +108,7 @@ final class Cover_Registry {
 					'accent'     => '#8c5e3c',
 					'text_color' => '#2b2118',
 					'title_font' => 'lora',
+					'align'      => 'center',
 				),
 			),
 			'split'         => array(
@@ -114,6 +121,7 @@ final class Cover_Registry {
 					'accent'     => '#4cc9f0',
 					'text_color' => '#ffffff',
 					'title_font' => 'montserrat',
+					'align'      => 'left',
 				),
 			),
 			'magazine'      => array(
@@ -126,6 +134,7 @@ final class Cover_Registry {
 					'accent'     => '#fcbf49',
 					'text_color' => '#ffffff',
 					'title_font' => 'bebas',
+					'align'      => 'left',
 				),
 			),
 			'tech'          => array(
@@ -138,6 +147,7 @@ final class Cover_Registry {
 					'accent'     => '#3fb950',
 					'text_color' => '#e6edf3',
 					'title_font' => 'mono',
+					'align'      => 'left',
 				),
 			),
 			'botanical'     => array(
@@ -150,6 +160,7 @@ final class Cover_Registry {
 					'accent'     => '#3a7d44',
 					'text_color' => '#1f3d24',
 					'title_font' => 'lora',
+					'align'      => 'center',
 				),
 			),
 			'playful'       => array(
@@ -162,6 +173,7 @@ final class Cover_Registry {
 					'accent'     => '#3a86ff',
 					'text_color' => '#22223b',
 					'title_font' => 'montserrat',
+					'align'      => 'left',
 				),
 			),
 		);

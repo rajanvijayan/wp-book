@@ -1,11 +1,15 @@
 /**
  * Output step: file name, metadata, bookmarks, watermark, password and history.
  */
-import { TextControl, ToggleControl } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
+import {
+	SelectControl,
+	TextControl,
+	ToggleControl,
+} from '@wordpress/components';
+import { __, sprintf } from '@wordpress/i18n';
 import { NumberField } from './fields';
 
-export default function OutputPanel( { config, setSection } ) {
+export default function OutputPanel( { config, setSection, pages } ) {
 	const output = config.output;
 	const set = ( values ) => setSection( 'output', values );
 	return (
@@ -77,6 +81,70 @@ export default function OutputPanel( { config, setSection } ) {
 					onChange={ ( password ) => set( { password } ) }
 				/>
 			</div>
+
+			<h3 className="wpbook-section-title">
+				{ __( 'Print', 'wp-book' ) }
+			</h3>
+			<ToggleControl
+				__nextHasNoMarginBottom
+				label={ __(
+					'Also create a print cover (back, spine and front on one sheet)',
+					'wp-book'
+				) }
+				help={ __(
+					'For print-on-demand services. Includes 3.175 mm (0.125 in) bleed; the spine width follows the page count.',
+					'wp-book'
+				) }
+				checked={ output.print_cover }
+				onChange={ ( value ) => set( { print_cover: value } ) }
+			/>
+			{ output.print_cover && (
+				<div className="wpbook-fields is-2col">
+					<SelectControl
+						__nextHasNoMarginBottom
+						label={ __( 'Paper', 'wp-book' ) }
+						value={ output.paper }
+						options={ [
+							{
+								value: 'white',
+								label: __(
+									'White (0.0572 mm per page)',
+									'wp-book'
+								),
+							},
+							{
+								value: 'cream',
+								label: __(
+									'Cream (0.0635 mm per page)',
+									'wp-book'
+								),
+							},
+						] }
+						onChange={ ( value ) => set( { paper: value } ) }
+					/>
+					<p className="wpbook-muted">
+						{ pages
+							? sprintf(
+									/* translators: 1: spine width in mm, 2: page count */
+									__(
+										'Spine: about %1$s mm for %2$d pages (from the last build).',
+										'wp-book'
+									),
+									(
+										pages *
+										( output.paper === 'cream'
+											? 0.0635
+											: 0.0572 )
+									).toFixed( 1 ),
+									pages
+							  )
+							: __(
+									'The spine width is calculated when the book is generated.',
+									'wp-book'
+							  ) }
+					</p>
+				</div>
+			) }
 		</div>
 	);
 }

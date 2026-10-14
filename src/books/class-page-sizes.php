@@ -51,6 +51,19 @@ final class Page_Sizes {
 	}
 
 	/**
+	 * Page size of a book in mm, honouring an internal exact-size override (used for print covers with bleed).
+	 *
+	 * @param array $layout Layout settings.
+	 * @return float[] [width, height]
+	 */
+	public static function for_layout( array $layout ) {
+		if ( isset( $layout['_size'] ) && is_array( $layout['_size'] ) ) {
+			return array( (float) $layout['_size'][0], (float) $layout['_size'][1] );
+		}
+		return self::dimensions( $layout['format'], $layout['orientation'] );
+	}
+
+	/**
 	 * Width and height in mm for a key, in the given orientation.
 	 *
 	 * @param string $key         Size key.

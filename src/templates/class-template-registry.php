@@ -15,7 +15,10 @@ final class Template_Registry {
 	/**
 	 * All interior templates keyed by slug.
 	 *
-	 * @return array<string, array{name: string, description: string, font: string, heading_font: string}>
+	 * Optional keys: page_background (hex), number_headings (bool), layout_defaults (layout settings applied
+	 * when the template is picked in the editor).
+	 *
+	 * @return array<string, array>
 	 */
 	public static function all() {
 		$templates = array(
@@ -32,16 +35,18 @@ final class Template_Registry {
 				'heading_font' => 'montserrat',
 			),
 			'magazine' => array(
-				'name'         => __( 'Magazine', 'wp-book' ),
-				'description'  => __( 'Two columns, large headlines and pull-quote styling.', 'wp-book' ),
-				'font'         => 'lora',
-				'heading_font' => 'bebas',
+				'name'            => __( 'Magazine', 'wp-book' ),
+				'description'     => __( 'Two columns, large headlines and pull-quote styling.', 'wp-book' ),
+				'font'            => 'lora',
+				'heading_font'    => 'bebas',
+				'layout_defaults' => array( 'columns' => 2 ),
 			),
 			'manual'   => array(
-				'name'         => __( 'Manual', 'wp-book' ),
-				'description'  => __( 'Numbered headings, code blocks and callouts for guides and documentation.', 'wp-book' ),
-				'font'         => 'inter',
-				'heading_font' => 'inter',
+				'name'            => __( 'Manual', 'wp-book' ),
+				'description'     => __( 'Numbered headings, code blocks and callouts for guides and documentation.', 'wp-book' ),
+				'font'            => 'inter',
+				'heading_font'    => 'inter',
+				'number_headings' => true,
 			),
 			'minimal'  => array(
 				'name'         => __( 'Minimal', 'wp-book' ),
@@ -50,10 +55,11 @@ final class Template_Registry {
 				'heading_font' => 'inter',
 			),
 			'dark'     => array(
-				'name'         => __( 'Dark Reader', 'wp-book' ),
-				'description'  => __( 'Light text on a dark page for comfortable reading on screens.', 'wp-book' ),
-				'font'         => 'inter',
-				'heading_font' => 'montserrat',
+				'name'            => __( 'Dark Reader', 'wp-book' ),
+				'description'     => __( 'Light text on a dark page for comfortable reading on screens.', 'wp-book' ),
+				'font'            => 'inter',
+				'heading_font'    => 'montserrat',
+				'page_background' => '#16181d',
 			),
 		);
 
@@ -63,5 +69,21 @@ final class Template_Registry {
 		 * @param array $templates Templates keyed by slug.
 		 */
 		return apply_filters( 'wpbook_templates', $templates );
+	}
+
+	/**
+	 * One template with defaults filled in; unknown keys fall back to Classic.
+	 *
+	 * @param string $key Template key.
+	 * @return array
+	 */
+	public static function get( $key ) {
+		$all      = self::all();
+		$template = isset( $all[ $key ] ) ? $all[ $key ] : $all['classic'];
+		return $template + array(
+			'page_background' => '',
+			'number_headings' => false,
+			'layout_defaults' => array( 'columns' => 1 ),
+		);
 	}
 }

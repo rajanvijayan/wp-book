@@ -24,7 +24,15 @@ export default function InteriorPanel( { meta, config, setSection } ) {
 			<TemplateGallery
 				templates={ meta.templates }
 				value={ interior.template }
-				onChange={ ( template ) => set( { template } ) }
+				onChange={ ( template ) => {
+					set( { template } );
+					const picked = meta.templates.find(
+						( t ) => t.key === template
+					);
+					if ( picked && picked.layout_defaults ) {
+						setSection( 'layout', picked.layout_defaults );
+					}
+				} }
 			/>
 
 			<h3 className="wpbook-section-title">

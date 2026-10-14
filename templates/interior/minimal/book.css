@@ -1,0 +1,9 @@
+/* Minimal: quiet typography, generous white space, no rules. */
+.wpb-chapter-opener { padding-top: 22%; margin-bottom: 3em; }
+.wpb-chapter-label { font-size: 0.75em; letter-spacing: 3pt; color: #999999; }
+h1.wpb-chapter-title { font-size: 1.8em; font-weight: normal; letter-spacing: -0.3pt; color: #111111; }
+h2 { font-size: 1.2em; font-weight: bold; margin-top: 2em; }
+h3 { font-size: 1em; font-weight: bold; }
+blockquote { border-left: 0; padding-left: 0; margin: 1.5em 2em; color: #666666; }
+.wpb-header td { border-bottom: 0; color: #aaaaaa; }
+.wpb-footer td { color: #aaaaaa; }

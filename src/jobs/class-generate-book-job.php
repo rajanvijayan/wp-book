@@ -9,6 +9,7 @@ namespace WPBook\Jobs;
 
 use WPBook\Books\Book;
 use WPBook\Books\Book_Repository;
+use WPBook\Covers\Wrap_Cover;
 use WPBook\Files\File_Store;
 use WPBook\Render\Book_Renderer;
 use WPBook\Render\Mpdf_Engine;
@@ -158,6 +159,23 @@ final class Generate_Book_Job {
 			$job['status'] = 'done';
 			$job['file']   = $record['id'];
 			$job['pages']  = $result['pages'];
+
+			if ( $book->config['output']['print_cover'] ) {
+				$wrap_path = Mpdf_Engine::temp_file( 'wpbook-wrap-' . $book_id );
+				$wrap      = Wrap_Cover::render( $book, $result['pages'], $wrap_path );
+				$wrap_rec  = File_Store::add(
+					$book,
+					$wrap_path,
+					array(
+						'kind'  => 'print-cover',
+						'pages' => 1,
+					)
+				);
+				if ( $wrap_rec ) {
+					$job['print_cover'] = $wrap_rec['id'];
+					$job['spine']       = $wrap['spine'];
+				}
+			}
 		} catch ( \Throwable $e ) {
 			$job['status']  = 'failed';
 			$job['message'] = $e->getMessage();

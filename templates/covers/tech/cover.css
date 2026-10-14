@@ -1,0 +1,9 @@
+/* Tech Guide: dark grid, terminal prompt, mono type. */
+.wpbc-tech { position: absolute; left: 0; top: 0; width: {{width}}; height: {{height}}; background: {{primary}}; }
+.wpbc-tech-art { position: absolute; left: 0; top: 0; }
+.wpbc-tech-badge { position: absolute; left: 10%; top: 9%; font-family: wpbinter, dejavusansmono; font-size: 8.5pt; font-weight: bold; color: {{primary}}; background: {{accent}}; padding: 1mm 2.5mm; }
+.wpbc-tech-text { position: absolute; left: 10%; right: 10%; top: 36%; text-align: left; }
+.wpbc-tech-prompt { font-family: dejavusansmono; font-size: 10pt; color: {{accent}}; margin-bottom: 4mm; }
+.wpbc-tech-title { font-family: {{title_font}}; font-size: {{title_size}}; line-height: 1.08; font-weight: bold; color: {{text}}; }
+.wpbc-tech-subtitle { margin-top: 5mm; font-family: dejavusansmono; font-size: 10pt; line-height: 1.5; color: {{text}}; }
+.wpbc-tech-author { position: absolute; left: 10%; right: 10%; bottom: 9%; font-family: dejavusansmono; font-size: 9.5pt; color: {{accent}}; }

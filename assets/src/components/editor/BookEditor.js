@@ -210,9 +210,12 @@ function EditorBody( props ) {
 		busy,
 	} = useJob( bookId, initialJob, ( done ) => {
 		if ( done.file ) {
+			const fresh = [ done.print_cover, done.file ].filter( Boolean );
 			setFiles( ( list ) => [
-				done.file,
-				...list.filter( ( f ) => f.id !== done.file.id ),
+				...fresh,
+				...list.filter(
+					( f ) => ! fresh.some( ( n ) => n.id === f.id )
+				),
 			] );
 		}
 	} );
@@ -220,7 +223,7 @@ function EditorBody( props ) {
 	const chapterCount = draft.config.content.chapters.filter(
 		( c ) => c.type === 'post'
 	).length;
-	const latest = files[ 0 ];
+	const latest = files.find( ( f ) => f.kind !== 'print-cover' );
 
 	const generate = () => {
 		const run = dirty ? save() : Promise.resolve();
@@ -381,7 +384,12 @@ function EditorBody( props ) {
 				) }
 				{ step === 'interior' && <InteriorPanel { ...panelProps } /> }
 				{ step === 'layout' && <LayoutPanel { ...panelProps } /> }
-				{ step === 'output' && <OutputPanel { ...panelProps } /> }
+				{ step === 'output' && (
+					<OutputPanel
+						{ ...panelProps }
+						pages={ latest ? latest.pages : 0 }
+					/>
+				) }
 				{ step === 'downloads' && (
 					<div className="wpbook-panel">
 						<h2>{ __( 'Downloads', 'wp-book' ) }</h2>

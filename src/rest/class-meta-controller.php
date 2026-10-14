@@ -70,8 +70,8 @@ final class Meta_Controller extends Rest_Controller {
 			);
 		}
 		$templates = array();
-		foreach ( Template_Registry::all() as $key => $template ) {
-			$templates[] = $template + array(
+		foreach ( array_keys( Template_Registry::all() ) as $key ) {
+			$templates[] = Template_Registry::get( $key ) + array(
 				'key'   => $key,
 				'thumb' => self::asset_url( 'interior/' . $key . '/thumb.png' ),
 			);

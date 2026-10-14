@@ -96,6 +96,10 @@ final class Jobs_Controller extends Rest_Controller {
 		if ( 'done' === $job['status'] && $job['file'] ) {
 			$record      = File_Store::find( $book_id, $job['file'] );
 			$out['file'] = $record ? Files_Controller::file_response( $book_id, $record ) : null;
+			if ( ! empty( $job['print_cover'] ) ) {
+				$wrap               = File_Store::find( $book_id, $job['print_cover'] );
+				$out['print_cover'] = $wrap ? Files_Controller::file_response( $book_id, $wrap ) : null;
+			}
 		}
 		return $out;
 	}

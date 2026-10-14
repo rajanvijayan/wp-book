@@ -575,7 +575,8 @@ $brand: var(--wp-admin-theme-color, #3858e9);
 			outline-offset: 2px;
 		}
 
-		&.is-selected {
+		&.is-selected,
+		&.is-selected:hover {
 			border-color: $brand;
 			box-shadow: 0 0 0 1px $brand, 0 6px 16px rgba(0, 0, 0, 0.08);
 		}

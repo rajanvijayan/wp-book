@@ -102,6 +102,8 @@ final class Book_Schema {
 				'password'      => array( 'text', '' ),
 				'image_quality' => array( 'int', 85, array( 30, 100 ) ),
 				'keep'          => array( 'int', 5, array( 1, 50 ) ),
+				'print_cover'   => array( 'bool', false ),
+				'paper'         => array( 'enum', 'white', array( 'white', 'cream' ) ),
 			),
 		);
 	}

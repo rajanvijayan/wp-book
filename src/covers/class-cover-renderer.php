@@ -80,7 +80,7 @@ final class Cover_Renderer {
 	public static function vars( Book $book ) {
 		$cover                  = $book->config['cover'];
 		$layout                 = $book->config['layout'];
-		list( $width, $height ) = Page_Sizes::dimensions( $layout['format'], $layout['orientation'] );
+		list( $width, $height ) = Page_Sizes::for_layout( $layout );
 
 		return array(
 			'book'       => $book,
@@ -96,6 +96,7 @@ final class Cover_Renderer {
 			'title_font' => Font_Manager::css_family( $cover['title_font'] ),
 			'body_font'  => Font_Manager::css_family( $cover['body_font'] ),
 			'site'       => get_bloginfo( 'name' ),
+			'title_size' => self::title_size( $book->cover_title(), $width ),
 		);
 	}
 
@@ -116,8 +117,8 @@ final class Cover_Renderer {
 			'width'      => $vars['width'] . 'mm',
 			'height'     => $vars['height'] . 'mm',
 			'align'      => $cover['align'],
-			// Title size scales with the page width so trade sizes and A4 both look balanced.
-			'title_size' => round( $vars['width'] / 5.2 ) . 'pt',
+			// Title size scales with the page width and the title length so every size looks balanced.
+			'title_size' => self::title_size( $vars['title'], $vars['width'] ) . 'pt',
 		);
 	}
 
@@ -171,6 +172,63 @@ final class Cover_Renderer {
 	private static function avatar_path( $user_id ) {
 		$url = get_avatar_url( $user_id, array( 'size' => 256 ) );
 		return $url ? Content_Filter::local_image_path( $url ) : '';
+	}
+
+	/**
+	 * Centre-crop an image to an aspect ratio (mPDF has no object-fit: cover). Results are cached.
+	 *
+	 * @param string $path   Local image path.
+	 * @param float  $width  Box width (any unit).
+	 * @param float  $height Box height (same unit).
+	 * @param int    $max_px Longest edge of the result in pixels.
+	 * @return string Path of the cropped image, or the original on failure.
+	 */
+	public static function fit_image( $path, $width, $height, $max_px = 2000 ) {
+		if ( '' === $path || 0 === strpos( $path, 'data:' ) || ! is_readable( $path ) || $width <= 0 || $height <= 0 ) {
+			return $path;
+		}
+		$dir    = \WPBook\Render\Mpdf_Engine::temp_dir() . '/covers';
+		$target = $dir . '/' . md5( $path . filemtime( $path ) . round( $width / $height, 4 ) . $max_px ) . '.jpg';
+		if ( file_exists( $target ) ) {
+			return $target;
+		}
+		$editor = wp_get_image_editor( $path );
+		if ( is_wp_error( $editor ) ) {
+			return $path;
+		}
+		$size  = $editor->get_size();
+		$ratio = $width / $height;
+		$src_w = $size['width'];
+		$src_h = $size['height'];
+		if ( $src_w / $src_h > $ratio ) {
+			$crop_w = (int) round( $src_h * $ratio );
+			$crop_h = $src_h;
+		} else {
+			$crop_w = $src_w;
+			$crop_h = (int) round( $src_w / $ratio );
+		}
+		$scale = min( 1, $max_px / max( $crop_w, $crop_h ) );
+		$editor->crop( (int) ( ( $src_w - $crop_w ) / 2 ), (int) ( ( $src_h - $crop_h ) / 2 ), $crop_w, $crop_h, (int) round( $crop_w * $scale ), (int) round( $crop_h * $scale ) );
+		$editor->set_quality( 86 );
+		if ( ! is_dir( $dir ) ) {
+			wp_mkdir_p( $dir );
+		}
+		$saved = $editor->save( $target, 'image/jpeg' );
+		return is_wp_error( $saved ) ? $path : $saved['path'];
+	}
+
+	/**
+	 * Title font size in points, scaled to the page width and shortened for long titles.
+	 *
+	 * @param string $title Title.
+	 * @param float  $width Page width in mm.
+	 * @param float  $scale Design-specific multiplier.
+	 * @return float
+	 */
+	public static function title_size( $title, $width, $scale = 1.0 ) {
+		$length = function_exists( 'mb_strlen' ) ? mb_strlen( $title ) : strlen( $title );
+		$factor = $length <= 12 ? 1 : ( $length <= 22 ? 0.84 : ( $length <= 36 ? 0.7 : 0.56 ) );
+		return round( $width / 5.2 * $factor * $scale, 1 );
 	}
 
 	/**

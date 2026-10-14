@@ -107,7 +107,7 @@ final class Book_Renderer {
 		$interior  = $this->book->config['interior'];
 		$templates = Template_Registry::all();
 		$key       = isset( $templates[ $interior['template'] ] ) ? $interior['template'] : 'classic';
-		$template  = $templates[ $key ];
+		$template  = Template_Registry::get( $key );
 		$body_font = '' !== $interior['font'] ? $interior['font'] : $template['font'];
 
 		$css  = Template_Loader::contents(
@@ -134,7 +134,8 @@ final class Book_Renderer {
 			)
 		);
 		if ( $interior['drop_caps'] ) {
-			$css .= '.wpb-chapter-body > p.wpb-first:first-letter { font-size: 3.2em; float: left; line-height: 0.9; margin: 0.05em 0.08em 0 0; font-family: ' . Font_Manager::css_family( $template['heading_font'] ) . '; color: ' . $this->book->config['cover']['accent'] . '; }';
+			// Raised initial: mPDF supports neither ::first-letter nor text wrapping around a floated letter.
+			$css .= '.wpb-dropcap { font-size: 2.8em; line-height: 1; font-family: ' . Font_Manager::css_family( $template['heading_font'] ) . '; color: ' . $this->book->config['cover']['accent'] . '; }';
 		}
 		return $css;
 	}
@@ -217,15 +218,19 @@ final class Book_Renderer {
 				continue;
 			}
 			++$number;
-			$anchor = 'wpb-ch' . $number;
-			$body   = $this->filter->post_html( $post, $anchor );
-			$title  = '' !== $chapter['title'] ? $chapter['title'] : get_the_title( $post );
+			$anchor   = 'wpb-ch' . $number;
+			$body     = $this->filter->post_html( $post, $anchor );
+			$headings = $this->filter->headings;
+			if ( Template_Registry::get( $config['interior']['template'] )['number_headings'] ) {
+				list( $body, $headings ) = $this->number_headings( $body, $headings, $number );
+			}
+			$title = '' !== $chapter['title'] ? $chapter['title'] : get_the_title( $post );
 			yield array(
 				'type'     => 'chapter',
 				'number'   => $number,
 				'title'    => wp_strip_all_tags( $title ),
 				'anchor'   => $anchor,
-				'headings' => $this->filter->headings,
+				'headings' => $headings,
 				'html'     => Template_Loader::render(
 					'parts/chapter.php',
 					$vars + array(
@@ -233,7 +238,7 @@ final class Book_Renderer {
 						'chapter'   => $chapter,
 						'number'    => $number,
 						'title'     => $title,
-						'body_html' => $this->mark_first_paragraph( $body ),
+						'body_html' => $this->mark_first_paragraph( $body, $config['interior']['drop_caps'] ),
 					)
 				),
 			);
@@ -259,13 +264,41 @@ final class Book_Renderer {
 	}
 
 	/**
+	 * Prefix section headings with "chapter.section" numbers (3.1, 3.1.2) in the body and the TOC entries.
+	 *
+	 * @param string $html     Chapter body.
+	 * @param array  $headings [toc level, text, anchor] rows.
+	 * @param int    $chapter  Chapter number.
+	 * @return array [html, headings]
+	 */
+	private function number_headings( $html, array $headings, $chapter ) {
+		$section    = 0;
+		$subsection = 0;
+		foreach ( $headings as $i => $heading ) {
+			list( $level, $text, $anchor ) = $heading;
+			if ( 2 === $level ) {
+				++$section;
+				$subsection = 0;
+				$label      = $chapter . '.' . $section;
+			} else {
+				++$subsection;
+				$label = $chapter . '.' . max( 1, $section ) . '.' . $subsection;
+			}
+			$html              = preg_replace( '/(<h\d[^>]*\sid="' . preg_quote( $anchor, '/' ) . '"[^>]*>)/', '$1<span class="wpb-num">' . $label . '</span> ', $html, 1 );
+			$headings[ $i ][1] = $label . ' ' . $text;
+		}
+		return array( $html, $headings );
+	}
+
+	/**
 	 * Tag the first paragraph of a chapter (for drop caps and no indent).
 	 *
-	 * @param string $html Chapter body.
+	 * @param string $html      Chapter body.
+	 * @param bool   $drop_caps Wrap the first letter for a raised initial.
 	 * @return string
 	 */
-	private function mark_first_paragraph( $html ) {
-		return preg_replace_callback(
+	private function mark_first_paragraph( $html, $drop_caps = false ) {
+		$html = preg_replace_callback(
 			'/<p(\s[^>]*)?>/',
 			static function ( $m ) {
 				$attrs = isset( $m[1] ) ? $m[1] : '';
@@ -277,5 +310,9 @@ final class Book_Renderer {
 			$html,
 			1
 		);
+		if ( $drop_caps ) {
+			$html = preg_replace( '/(<p[^>]*wpb-first[^>]*>)((?:\s*<(?!\/p)[^>]+>)*\s*)([\p{L}\p{N}])/u', '$1$2<span class="wpb-dropcap">$3</span>', $html, 1 );
+		}
+		return $html;
 	}
 }

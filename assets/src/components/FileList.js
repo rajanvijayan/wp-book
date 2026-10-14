@@ -27,10 +27,12 @@ export default function FileList( { files, onDelete } ) {
 			</p>
 		);
 	}
+	const firstBook = files.findIndex( ( f ) => f.kind !== 'print-cover' );
 	return (
 		<table className="wpbook-files widefat striped">
 			<thead>
 				<tr>
+					<th>{ __( 'File', 'wp-book' ) }</th>
 					<th>{ __( 'Created', 'wp-book' ) }</th>
 					<th>{ __( 'Pages', 'wp-book' ) }</th>
 					<th>{ __( 'Size', 'wp-book' ) }</th>
@@ -45,8 +47,13 @@ export default function FileList( { files, onDelete } ) {
 				{ files.map( ( file, index ) => (
 					<tr key={ file.id }>
 						<td>
+							{ file.kind === 'print-cover'
+								? __( 'Print cover', 'wp-book' )
+								: __( 'Book', 'wp-book' ) }
+						</td>
+						<td>
 							{ formatDate( file.created ) }
-							{ index === 0 && (
+							{ index === firstBook && (
 								<span className="wpbook-badge">
 									{ __( 'Latest', 'wp-book' ) }
 								</span>

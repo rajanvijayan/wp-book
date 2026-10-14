@@ -126,6 +126,22 @@ final class File_Store {
 	}
 
 	/**
+	 * Newest file of a kind.
+	 *
+	 * @param int    $book_id Book ID.
+	 * @param string $kind    book or print-cover.
+	 * @return array|null
+	 */
+	public static function latest( $book_id, $kind = 'book' ) {
+		foreach ( self::records( $book_id ) as $record ) {
+			if ( $kind === $record['kind'] ) {
+				return $record;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * One file record.
 	 *
 	 * @param int    $book_id Book ID.
