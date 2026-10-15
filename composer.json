@@ -30,6 +30,7 @@
             "@putenv COMPOSER_AUTH={}",
             "@putenv COMPOSER_HOME=vendor/.strauss-home",
             "@php bin/strauss.phar",
+            "@php -r \"@unlink('vendor/composer/autoload_aliases.php');\"",
             "@putenv COMPOSER_HOME=",
             "@php bin/trim-fonts.php",
             "@composer dump-autoload --optimize"
