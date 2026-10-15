@@ -19,3 +19,4 @@ README.md
 RELEASING.md
 CLAUDE.md
 .phpunit.result.cache
+/docs
