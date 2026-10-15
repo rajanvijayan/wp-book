@@ -1,0 +1,11 @@
+/* Photo Frame: a framed photograph above a quiet title block. */
+.wpbc-pf { position: absolute; left: 0; top: 0; width: {{width}}; height: {{height}}; background: {{primary}}; }
+.wpbc-pf-shadow { position: absolute; }
+.wpbc-pf-frame { position: absolute; background: #ffffff; padding: 2.4mm; }
+.wpbc-pf-placeholder { background: linear-gradient(160deg, {{accent}}, {{primary}}); }
+.wpbc-pf-text { position: absolute; left: 12%; right: 12%; top: 63%; text-align: center; }
+.wpbc-pf-badge { font-family: {{body_font}}; font-size: 8.5pt; letter-spacing: 2.5pt; text-transform: uppercase; color: {{accent}}; margin-bottom: 3mm; }
+.wpbc-pf-title { font-family: {{title_font}}; font-size: {{title_size}}; line-height: 1.08; font-weight: bold; color: {{text}}; }
+.wpbc-pf-rule { width: 14mm; height: 0.6mm; background: {{accent}}; margin: 4mm auto; }
+.wpbc-pf-subtitle { font-family: {{body_font}}; font-size: 11.5pt; font-style: italic; color: {{text}}; }
+.wpbc-pf-author { position: absolute; left: 12%; right: 12%; bottom: 7%; text-align: center; font-family: {{body_font}}; font-size: 10.5pt; letter-spacing: 2.5pt; text-transform: uppercase; color: {{text}}; }

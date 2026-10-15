@@ -1,0 +1,9 @@
+/* Minimal: white space, one accent rule, strong left-aligned type. */
+.wpbc-min { position: absolute; left: 0; top: 0; width: {{width}}; height: {{height}}; background: {{primary}}; }
+.wpbc-min-badge { position: absolute; left: 13%; top: 10%; font-family: {{body_font}}; font-size: 8.5pt; letter-spacing: 2.5pt; text-transform: uppercase; color: {{text}}; }
+.wpbc-min-rule { position: absolute; left: 13%; top: 30%; width: 16mm; height: 1.6mm; background: {{accent}}; }
+.wpbc-min-text { position: absolute; left: 13%; right: 13%; top: 34%; text-align: {{align}}; }
+.wpbc-min-title { font-family: {{title_font}}; font-size: {{title_size}}; line-height: 1.02; font-weight: bold; color: {{text}}; }
+.wpbc-min-subtitle { margin-top: 6mm; font-family: {{body_font}}; font-size: 12pt; line-height: 1.4; color: {{text}}; }
+.wpbc-min-author { position: absolute; left: 13%; right: 13%; bottom: 10%; font-family: {{body_font}}; font-size: 11pt; font-weight: bold; color: {{text}}; text-align: {{align}}; }
+.wpbc-min-logo { position: absolute; right: 13%; top: 8%; }

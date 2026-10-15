@@ -1,0 +1,8 @@
+/* Bold Type: a huge stacked title that fills the page, author on a solid bar. */
+.wpbc-bold { position: absolute; left: 0; top: 0; width: {{width}}; height: {{height}}; background: {{primary}}; }
+.wpbc-bold-badge { position: absolute; left: 9%; top: 7%; font-family: {{body_font}}; font-size: 9pt; font-weight: bold; letter-spacing: 2pt; text-transform: uppercase; color: {{text}}; }
+.wpbc-bold-text { position: absolute; left: 9%; right: 7%; top: 16%; text-align: {{align}}; }
+.wpbc-bold-title { font-family: {{title_font}}; line-height: 0.88; text-transform: uppercase; color: {{text}}; }
+.wpbc-bold-subtitle { margin-top: 7mm; font-family: {{body_font}}; font-size: 12pt; font-weight: bold; line-height: 1.35; color: {{text}}; }
+.wpbc-bold-bar { position: absolute; left: 0; bottom: 0; width: {{width}}; height: 17%; background: {{accent}}; }
+.wpbc-bold-author { position: absolute; left: 9%; right: 9%; bottom: 6.5%; font-family: {{body_font}}; font-size: 13pt; font-weight: bold; letter-spacing: 1.5pt; text-transform: uppercase; color: {{primary}}; text-align: {{align}}; }

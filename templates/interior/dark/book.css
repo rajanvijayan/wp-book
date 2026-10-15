@@ -1,0 +1,17 @@
+/* Dark Reader: light text on a dark page for screen reading. The page colour is set by the engine. */
+body { color: #d9dbe0; }
+p, li, td, th { color: #d9dbe0; }
+h1, h2, h3, h4, h5, h6 { color: #ffffff; }
+a { color: {{accent}}; }
+.wpb-chapter-opener { padding-top: 10%; margin-bottom: 2em; }
+.wpb-chapter-label { color: {{accent}}; letter-spacing: 2pt; }
+h1.wpb-chapter-title { font-size: 2.2em; font-weight: bold; }
+.wpb-chapter-meta, .wpb-chapter-excerpt, figcaption, .wp-element-caption { color: #9ea3ab; }
+blockquote { color: #b7bbc2; border-left-color: {{accent}}; }
+pre { background: #0f1115; color: #d9dbe0; }
+th, td { border-color: #3a3e45; }
+.wpb-header td { color: #8a8f98; border-bottom-color: #3a3e45; }
+.wpb-footer td { color: #8a8f98; }
+.wpb-title-page .wpb-tp-subtitle, .wpb-copyright, .wpb-part .wpb-part-subtitle { color: #9ea3ab; }
+.wpb-copyright p { color: #9ea3ab; }
+div.mpdf_toc, a.mpdf_toc_a, span.mpdf_toc_pagenum { color: #d9dbe0; }

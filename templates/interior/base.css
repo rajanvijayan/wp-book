@@ -1,0 +1,63 @@
+/* Shared by every interior template. {{placeholders}} are filled from the book settings. */
+body { font-family: {{body_font}}; font-size: {{font_size}}; line-height: {{line_height}}; color: #1d1d1f; }
+p { margin: 0 0 {{para_space}} 0; text-align: {{text_align}}; text-indent: {{indent}}; }
+p.wpb-first, h1 + p, h2 + p, h3 + p, blockquote p { text-indent: 0; }
+h1, h2, h3, h4, h5, h6 { font-family: {{heading_font}}; line-height: 1.25; page-break-after: avoid; }
+h2 { font-size: 1.45em; margin: 1.3em 0 0.5em; }
+h3 { font-size: 1.2em; margin: 1.2em 0 0.4em; }
+h4, h5, h6 { font-size: 1.05em; margin: 1em 0 0.3em; }
+a { color: {{accent}}; text-decoration: none; }
+img { max-width: 100%; height: auto; }
+figure { margin: 1em 0; text-align: center; }
+figcaption, .wp-element-caption { font-size: 0.85em; color: #666666; text-align: center; margin-top: 0.3em; }
+blockquote { margin: 1em 1.5em; padding-left: 0.8em; border-left: 2pt solid {{accent}}; font-style: italic; color: #444444; }
+pre, code { font-family: {{mono_font}}; font-size: 0.85em; }
+pre { background: #f5f5f7; padding: 0.6em 0.8em; border-radius: 3pt; white-space: pre-wrap; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border: 0.5pt solid #cccccc; padding: 3pt 5pt; }
+ul, ol { margin: 0 0 0.8em 1.3em; padding: 0; }
+hr { border: 0; border-top: 0.5pt solid #cccccc; margin: 1.2em 0; }
+.wpb-embed-link { font-size: 0.85em; }
+
+/* Running header and footer */
+.wpb-header, .wpb-footer { width: 100%; font-family: {{heading_font}}; font-size: 8pt; color: #888888; }
+.wpb-header td { padding-bottom: 2pt; border-bottom: 0.3pt solid #dddddd; }
+.wpb-h-left, .wpb-f-left { text-align: left; }
+.wpb-h-right, .wpb-f-right { text-align: right; }
+.wpb-f-center { text-align: center; }
+.wpb-header td, .wpb-footer td { border-left: 0; border-right: 0; border-top: 0; }
+.wpb-footer td { border-bottom: 0; }
+
+/* Front matter */
+.wpb-title-page { text-align: center; padding-top: 30%; }
+.wpb-title-page .wpb-tp-title { font-family: {{heading_font}}; font-size: 2.4em; line-height: 1.15; margin: 0 0 0.3em; }
+.wpb-title-page .wpb-tp-subtitle { font-size: 1.15em; color: #555555; margin: 0 0 2.5em; text-align: center; }
+.wpb-title-page .wpb-tp-author { font-size: 1.1em; letter-spacing: 1pt; text-transform: uppercase; text-align: center; }
+.wpb-title-page .wpb-tp-site { margin-top: 30%; font-size: 0.85em; color: #888888; text-align: center; }
+.wpb-copyright { padding-top: 70%; font-size: 0.8em; color: #555555; }
+.wpb-copyright p { text-align: left; text-indent: 0; margin-bottom: 0.4em; }
+.wpb-dedication { padding-top: 35%; text-align: center; font-style: italic; font-size: 1.1em; }
+.wpb-dedication p { text-align: center; text-indent: 0; }
+.wpb-preface h1, .wpb-about h1 { font-size: 1.8em; margin: 0 0 1em; }
+h1.wpb-toc-title { font-size: 1.8em; margin: 0 0 1em; }
+
+/* Table of contents (mPDF classes) */
+div.mpdf_toc { font-family: {{body_font}}; }
+div.mpdf_toc_level_0 { margin: 0.6em 0 0.2em; font-weight: bold; }
+div.mpdf_toc_level_1 { margin: 0.15em 0 0.15em 1.2em; }
+div.mpdf_toc_level_2 { margin: 0.1em 0 0.1em 2.4em; font-size: 0.92em; color: #444444; }
+div.mpdf_toc_level_3 { margin: 0.1em 0 0.1em 3.6em; font-size: 0.88em; color: #555555; }
+a.mpdf_toc_a { color: #1d1d1f; text-decoration: none; }
+span.mpdf_toc_pagenum { color: #555555; }
+
+/* Parts and chapters */
+.wpb-part { text-align: center; padding-top: 35%; }
+.wpb-part .wpb-part-label { font-size: 0.85em; letter-spacing: 2pt; text-transform: uppercase; color: {{accent}}; text-align: center; }
+.wpb-part h1 { font-size: 2.2em; margin: 0.3em 0; }
+.wpb-part .wpb-part-subtitle { color: #666666; text-align: center; }
+.wpb-chapter-opener { margin-bottom: 1.5em; }
+.wpb-chapter-label { font-size: 0.8em; letter-spacing: 2pt; text-transform: uppercase; color: {{accent}}; margin-bottom: 0.4em; text-align: left; text-indent: 0; }
+h1.wpb-chapter-title { font-size: 2em; margin: 0 0 0.4em; }
+.wpb-chapter-meta { font-size: 0.85em; color: #777777; text-indent: 0; }
+.wpb-chapter-excerpt { font-style: italic; color: #555555; text-indent: 0; }
+.wpb-featured { margin: 0.8em 0 1.2em; text-align: center; }

@@ -1,0 +1,8 @@
+/* Botanical: hand-drawn leaves framing a serif title. */
+.wpbc-bot { position: absolute; left: 0; top: 0; width: {{width}}; height: {{height}}; background: {{primary}}; }
+.wpbc-bot-art { position: absolute; left: 0; top: 0; }
+.wpbc-bot-text { position: absolute; left: 16%; right: 16%; top: 35%; text-align: center; }
+.wpbc-bot-badge { font-family: {{body_font}}; font-size: 8.5pt; letter-spacing: 3pt; text-transform: uppercase; color: {{accent}}; margin-bottom: 4mm; }
+.wpbc-bot-title { font-family: {{title_font}}; font-size: {{title_size}}; line-height: 1.1; color: {{text}}; }
+.wpbc-bot-subtitle { margin-top: 5mm; font-family: {{body_font}}; font-size: 11.5pt; font-style: italic; color: {{text}}; }
+.wpbc-bot-author { position: absolute; left: 16%; right: 16%; bottom: 11%; text-align: center; font-family: {{body_font}}; font-size: 10.5pt; letter-spacing: 2.5pt; text-transform: uppercase; color: {{text}}; }

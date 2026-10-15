@@ -1,0 +1,8 @@
+/* Classic Novel: cloth-bound colour, double gilt frame, centred italic serif. */
+.wpbc-cn { position: absolute; left: 0; top: 0; width: {{width}}; height: {{height}}; background: {{primary}}; }
+.wpbc-cn-frame { position: absolute; left: 0; top: 0; }
+.wpbc-cn-badge { position: absolute; left: 15%; right: 15%; top: 15%; text-align: center; font-family: {{body_font}}; font-size: 8.5pt; letter-spacing: 3pt; text-transform: uppercase; color: {{accent}}; }
+.wpbc-cn-text { position: absolute; left: 16%; right: 16%; top: 33%; text-align: center; }
+.wpbc-cn-title { font-family: {{title_font}}; font-size: {{title_size}}; line-height: 1.1; font-style: italic; color: {{text}}; }
+.wpbc-cn-subtitle { margin-top: 6mm; font-family: {{title_font}}; font-size: 12pt; color: {{text}}; }
+.wpbc-cn-author { position: absolute; left: 15%; right: 15%; bottom: 16%; text-align: center; font-family: {{body_font}}; font-size: 10.5pt; letter-spacing: 3pt; text-transform: uppercase; color: {{accent}}; }
