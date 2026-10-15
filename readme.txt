@@ -16,6 +16,12 @@ Turn your posts and pages into beautiful PDF eBooks with cover designs, interior
 
 Formerly **WP Book**.
 
+= Video walkthrough =
+
+See every feature in five minutes, from choosing a cover to downloading the finished book:
+
+https://www.youtube.com/watch?v=KCanH1viWaQ
+
 = A cover for every book =
 
 Choose from 12 cover designs and make them your own:

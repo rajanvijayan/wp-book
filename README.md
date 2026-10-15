@@ -8,7 +8,9 @@
 
 Turn your WordPress posts and pages into a polished PDF eBook, with a cover, an interior template and a table of contents, and download it from your dashboard. Formerly **WP Book**; the plugin slug is still `wp-book`.
 
-**[Download from WordPress.org](https://wordpress.org/plugins/wp-book/)**
+**[Download from WordPress.org](https://wordpress.org/plugins/wp-book/)** · [Video walkthrough](https://www.youtube.com/watch?v=KCanH1viWaQ)
+
+[![BookPress video walkthrough](https://i.ytimg.com/vi/KCanH1viWaQ/hqdefault.jpg)](https://www.youtube.com/watch?v=KCanH1viWaQ)
 
 ## Features
 
