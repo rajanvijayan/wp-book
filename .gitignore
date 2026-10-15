@@ -3,3 +3,8 @@
 .DS_Store
 *.log
 *.zip
+/vendor-prefixed/
+/bin/strauss.phar
+/node_modules/
+/build/
+/.phpunit.result.cache

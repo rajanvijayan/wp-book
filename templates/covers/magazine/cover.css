@@ -1,0 +1,9 @@
+/* Magazine: full-bleed photo, masthead title, cover lines and an issue badge. */
+.wpbc-mag-bg { position: absolute; left: 0; top: 0; width: {{width}}; height: {{height}}; background: linear-gradient(170deg, {{accent}}, {{primary}}); }
+.wpbc-mag-img, .wpbc-mag-shade { position: absolute; left: 0; top: 0; }
+.wpbc-mag-title { position: absolute; left: 6%; right: 6%; top: 3.5%; font-family: {{title_font}}; line-height: 0.9; text-transform: uppercase; color: {{text}}; text-align: center; }
+.wpbc-mag-badge { position: absolute; text-align: center; font-family: {{body_font}}; font-weight: bold; color: {{primary}}; }
+.wpbc-mag-lines { position: absolute; left: 7%; width: 55%; bottom: 16%; }
+.wpbc-mag-kicker { display: inline; background: {{primary}}; color: #ffffff; font-family: {{body_font}}; font-size: 8.5pt; font-weight: bold; letter-spacing: 1.5pt; text-transform: uppercase; padding: 1mm 2mm; }
+.wpbc-mag-subtitle { margin-top: 3mm; font-family: {{title_font}}; font-size: 20pt; line-height: 1; text-transform: uppercase; color: {{text}}; }
+.wpbc-mag-author { position: absolute; left: 7%; right: 7%; bottom: 6%; font-family: {{body_font}}; font-size: 10pt; font-weight: bold; letter-spacing: 2pt; text-transform: uppercase; color: {{text}}; }

@@ -1,0 +1,10 @@
+/* Magazine: big condensed headlines, two-column body (set Columns to 2), pull quotes. */
+.wpb-chapter-opener { padding-top: 4%; margin-bottom: 1.2em; }
+.wpb-chapter-label { display: inline; background: {{accent}}; color: #ffffff; padding: 2pt 6pt; font-family: {{body_font}}; font-weight: bold; font-size: 0.75em; letter-spacing: 1pt; }
+h1.wpb-chapter-title { font-family: {{heading_font}}; font-size: 3.2em; line-height: 0.95; text-transform: uppercase; margin: 0.3em 0 0.25em; color: #111111; }
+.wpb-chapter-excerpt { font-size: 1.15em; font-style: normal; color: #333333; border-top: 1pt solid #111111; border-bottom: 1pt solid #111111; padding: 0.5em 0; }
+h2 { font-family: {{heading_font}}; font-size: 1.7em; text-transform: uppercase; letter-spacing: 0.5pt; }
+h3 { font-family: {{body_font}}; font-weight: bold; text-transform: uppercase; font-size: 0.95em; letter-spacing: 1pt; color: {{accent}}; }
+blockquote { border: 0; border-top: 3pt solid {{accent}}; border-bottom: 3pt solid {{accent}}; margin: 1em 0; padding: 0.5em 0; font-family: {{heading_font}}; font-size: 1.5em; font-style: normal; line-height: 1.1; color: #111111; text-align: center; }
+blockquote p { text-align: center; }
+.wpb-header td { font-family: {{body_font}}; text-transform: uppercase; letter-spacing: 1pt; font-weight: bold; border-bottom: 1.5pt solid #111111; color: #111111; }

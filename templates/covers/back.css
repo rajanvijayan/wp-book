@@ -1,0 +1,8 @@
+/* Back cover: shared by every design, coloured with the cover palette. */
+.wpbc-back { position: absolute; left: 0; top: 0; width: {{width}}; height: {{height}}; background: {{primary}}; }
+.wpbc-back-blurb { position: absolute; left: 14%; right: 14%; top: 16%; font-family: {{body_font}}; font-size: 12pt; line-height: 1.55; color: {{text}}; text-align: left; }
+.wpbc-back-rule { width: 18mm; border-top: 1.2pt solid {{accent}}; margin: 8mm 0; }
+.wpbc-back-bio { font-size: 10pt; line-height: 1.5; color: {{text}}; }
+.wpbc-back-avatar { margin-bottom: 4mm; }
+.wpbc-back-footer { position: absolute; left: 14%; right: 14%; bottom: 10%; font-family: {{body_font}}; color: {{text}}; font-size: 9pt; }
+.wpbc-back-title { font-family: {{title_font}}; font-size: 14pt; color: {{text}}; }

@@ -1,34 +1,89 @@
 {
     "name": "rajanvijayan/wp-book",
-    "description": "WP Book WordPress plugin.",
+    "description": "BookPress – turn WordPress posts and pages into PDF eBooks.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
     "require": {
-        "php": ">=7.1",
-        "mpdf/mpdf": "7.1.5"
+        "php": ">=7.4",
+        "mpdf/mpdf": "^8.2",
+        "mpdf/qrcode": "^1.2",
+        "woocommerce/action-scheduler": "^3.9"
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
         "phpcompatibility/phpcompatibility-wp": "^2.1",
-        "wp-coding-standards/wpcs": "^3.1"
+        "phpunit/phpunit": "^9.6",
+        "wp-coding-standards/wpcs": "^3.1",
+        "yoast/phpunit-polyfills": "^2.0"
     },
     "autoload": {
-        "psr-4": {
-            "WPBook\\": "src/"
-        }
+        "classmap": [
+            "src/"
+        ]
     },
     "scripts": {
         "lint": "phpcs",
-        "lint:fix": "phpcbf"
+        "lint:fix": "phpcbf",
+        "strauss-install": "test -f ./bin/strauss.phar || curl -fsSL -o bin/strauss.phar https://github.com/BrianHenryIE/strauss/releases/download/0.22.6/strauss.phar",
+        "prefix-namespaces": [
+            "@strauss-install",
+            "@putenv COMPOSER_AUTH={}",
+            "@putenv COMPOSER_HOME=vendor/.strauss-home",
+            "@php bin/strauss.phar",
+            "@php -r \"@unlink('vendor/composer/autoload_aliases.php');\"",
+            "@putenv COMPOSER_HOME=",
+            "@php bin/trim-fonts.php",
+            "@composer dump-autoload --optimize"
+        ],
+        "post-install-cmd": [
+            "@prefix-namespaces"
+        ],
+        "post-update-cmd": [
+            "@prefix-namespaces"
+        ]
     },
     "config": {
         "platform": {
-            "php": "7.2.34"
+            "php": "7.4.33"
         },
         "optimize-autoloader": true,
         "sort-packages": true,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "extra": {
+        "strauss": {
+            "target_directory": "vendor-prefixed",
+            "namespace_prefix": "WPBook\\Vendor\\",
+            "classmap_prefix": "WPBook_Vendor_",
+            "constant_prefix": "WPBOOK_VENDOR_",
+            "packages": [
+                "mpdf/mpdf",
+                "mpdf/qrcode"
+            ],
+            "delete_vendor_packages": true,
+            "include_modified_date": false,
+            "include_author": false,
+            "override_autoload": {
+                "mpdf/mpdf": {
+                    "psr-4": {
+                        "Mpdf\\": "src"
+                    },
+                    "classmap": [
+                        "data",
+                        "ttfonts"
+                    ]
+                },
+                "mpdf/qrcode": {
+                    "psr-4": {
+                        "Mpdf\\QrCode\\": "src"
+                    },
+                    "classmap": [
+                        "data"
+                    ]
+                }
+            }
         }
     }
 }

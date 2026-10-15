@@ -1,0 +1,8 @@
+/* Geometric: overlapping circles and triangles in the brand colours. */
+.wpbc-geo { position: absolute; left: 0; top: 0; width: {{width}}; height: {{height}}; background: {{primary}}; }
+.wpbc-geo-art { position: absolute; left: 0; top: 0; }
+.wpbc-geo-badge { position: absolute; left: 10%; top: 8%; font-family: {{body_font}}; font-size: 9pt; letter-spacing: 2.5pt; text-transform: uppercase; color: {{text}}; }
+.wpbc-geo-text { position: absolute; left: 10%; right: 12%; bottom: 20%; text-align: {{align}}; }
+.wpbc-geo-title { font-family: {{title_font}}; font-size: {{title_size}}; line-height: 1.02; font-weight: bold; color: {{text}}; }
+.wpbc-geo-subtitle { margin-top: 5mm; font-family: {{body_font}}; font-size: 12pt; line-height: 1.35; color: {{text}}; }
+.wpbc-geo-author { position: absolute; left: 10%; right: 10%; bottom: 8%; font-family: {{body_font}}; font-size: 11pt; letter-spacing: 2pt; text-transform: uppercase; color: {{text}}; text-align: {{align}}; }
